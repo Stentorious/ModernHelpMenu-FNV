@@ -1,0 +1,274 @@
+; Modern Help Menu - Stentorious
+
+; Check for requirements
+if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
+	MessageBoxEx "Modern Help Menu missing requirement!%rInstall xNVSE 6.4.0+."
+	return
+endif
+if GetPluginVersion "JohnnyGuitarNVSE" < 517
+	MessageBoxEx "Modern Help Menu missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
+	return
+endif
+if GetPluginVersion "ShowOffNVSE Plugin" < 181
+	MessageBoxEx "Modern Help Menu missing requirement!%rInstall latest ShowOff NVSE plugin."
+	return
+endif
+if GetPluginVersion "UI Organizer Plugin" < 230
+	MessageBoxEx "Modern Help Menu missing requirement!%rInstall latest User Interface Organizer plugin."
+	return
+endif
+
+int iSUPInstalled = (eval GetPluginVersion "SUP NVSE Plugin" >= 600)
+
+; Set unused GameSetting to new line
+SetStringSetting "sGFWLive" (sv_Construct "%r")
+
+; Get screen dimensions
+Goo1.AuxVarSetFlt "*_ScreenWidth" (GetNumericINISetting "iSize W:Display")
+Goo1.AuxVarSetFlt "*_ScreenHeight" (GetNumericINISetting "iSize H:Display")
+
+; Menu events
+SGMLC (CompileScript "ModernHelpMenu\MenuLoop.gek") 1 1 2
+SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu\NOGLOW_BRANCH\main_container\lb_item_hotrect"
+SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu\NOGLOW_BRANCH\main_container"
+SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu#703"
+SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu#704"
+SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu#706"
+SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu#707"
+SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu#708"
+
+; Menu control events
+SetOnKeyDownEventHandler (CompileScript "ModernHelpMenu\OnKeyDown.gek") 1 15			; Tab
+SetOnKeyDownEventHandler (CompileScript "ModernHelpMenu\OnKeyDown.gek") 1 33			; F
+SetOnKeyDownEventHandler (CompileScript "ModernHelpMenu\OnKeyDown.gek") 1 18			; E
+SetOnKeyDownEventHandler (CompileScript "ModernHelpMenu\OnKeyDown.gek") 1 264			; Wheel Up
+SetOnKeyDownEventHandler (CompileScript "ModernHelpMenu\OnKeyDown.gek") 1 265			; Wheel Down
+SetEventHandler "OnButtonDown:15" (CompileScript "ModernHelpMenu\OnButtonDown.gek")		; DPad
+SetEventHandler "OnButtonDown:4096" (CompileScript "ModernHelpMenu\OnButtonDown.gek")	; A Button
+SetEventHandler "OnButtonDown:8192" (CompileScript "ModernHelpMenu\OnButtonDown.gek")	; B Button
+
+; MAPMO support
+if eval IsModLoaded "Main And Pause Menus Overhaul.esm"
+	SetOnMenuOpenEventHandler (CompileScript "ModernHelpMenu\OnPauseMenuOpen.gek") 1 1013
+endif
+
+; Search Bar events
+array_var aKeys = Ar_List 2 3 4 5 6 7 8 9 10 11 16 17 18 19 20 21 22 23 24 25
+array_var aTemp = Ar_List 30 31 32 33 34 35 36 37 38 44 45 46 47 48 49 50 14 28 57
+ar_Cat aKeys aTemp
+aTemp = Ar_List 199 207 203 205
+ar_Cat aKeys aTemp
+if eval (int iSize = ar_Size aKeys) > 0
+	while (iSize -= 1) > -1
+		SetOnKeyDownEventHandler (CompileScript "ModernHelpMenu\SearchInput.gek") 1 (aKeys[iSize])
+		SetOnKeyUpEventHandler (CompileScript "ModernHelpMenu\OnKeyUp.gek") 1 (aKeys[iSize])
+	loop
+endif
+aKeys = aTemp = ar_Null
+
+; Controller scroll events
+SetEventHandler "OnButtonUp:3" (begin function {int iKeyCode}
+	if eval Goo1.AuxVarType "*HelpMenu_QBut" == 0
+		return
+	endif
+	AuxTimerStop "*HelpMenu_QBut"
+	Goo1.AuxVarErase "*HelpMenu_QBut"
+end)
+
+; Darnified UI support
+SetUIFloatAlt "HUDMainMenu\_HelpMenu+Darn" (eval IsModloaded "DarNifiedUINV.esp")
+
+; Modern Help Menu version
+float ModernHelpMenuVersion = 1.0
+
+int iIndex = 0
+int iSize
+ref rMessage
+ref rMessageXbox
+array_var aJSON
+array_var aEntry
+array_var aCategory
+array_var aEntry
+array_var aForE1
+array_var aForE2
+string_var sJSONPath
+string_var sTranslationPath
+string_var sTemp
+string_var sCategory
+
+; Load help messages
+array_var aCategories = ar_Construct "array"
+array_var aFiles = GetFiles "HelpMenu" "*.json"
+if eval (iSize = ar_Size aFiles) > 0
+	PrintC "Modern Help Menu: Loading JSON files..."
+	aFiles = Ar_Sort aFiles 1
+	if eval FileExists "HelpMenu\FalloutNewVegas.json"
+		Ar_Erase aFiles (ar_Find "FalloutNewVegas.json" aFiles)
+		Ar_Append aFiles "FalloutNewVegas.json"
+	endif
+
+	while (iSize -= 1) > -1
+		sTemp = aFiles[iSize]
+		sJSONPath = sv_Construct "Data\HelpMenu\%z" sTemp
+		sTranslationPath = sv_Construct "..\HelpMenu\Translations\%z.ini" (sTemp[0:-6])
+
+		; Check valid JSON
+		if eval TestExpr (aJSON = ReadFromJSON (sJSONPath))
+		else
+			PrintC "Modern Help Menu: Invalid -> %z" sJSONPath
+			continue
+		endif
+		; Check Modern Help Menu version
+		if eval ar_HasKey aJSON "minMHMVersion" == 0 || (aJSON["minMHMVersion"]) > ModernHelpMenuVersion
+			PrintC "Modern Help Menu: Requires Modern Help Menu %.2f+ -> %z" (aJSON["minMHMVersion"]) sJSONPath
+			continue
+		endif
+		; Check requirements array
+		if eval ar_HasKey aJSON "requirements" && (Call (CompileScript "ModernHelpMenu\CheckRequirements.gek") aJSON) == 0
+			PrintC "Modern Help Menu: Missing requirements -> %z" sJSONPath
+			continue
+		endif
+		; Check for categories
+		if eval ar_HasKey aJSON "categories" == 0
+			PrintC "Modern Help Menu: Missing categories -> %z" sJSONPath
+			continue
+		endif
+
+		if eval (ar_Size aJSON["categories"]) > 0
+			foreach aForE1 <- aJSON["categories"]
+				aCategory = *aForE1
+
+				; Add Category
+
+				; Translate
+				sCategory = aCategory["listTitle"]
+				if eval sCategory[0] == "$"
+					sCategory = GetINIString_Cached ("Translations:" + (sCategory)) (sTranslationPath) (sCategory)
+				endif
+
+				if eval (Ar_Find (sCategory) aCategories) == Ar_BadNumericIndex
+					ar_Insert aCategories 0 (sCategory)
+				endif
+				foreach aForE2 <- aCategory["entries"]
+
+					aEntry = *aForE2
+
+					; Message form
+					if eval ar_HasKey aEntry "message"
+						if eval IsFormValid (rMessage = EditorIDToFormID (aEntry["message"])) == 0
+							continue
+						endif
+						TrudyRef.AuxVarSetRef "*HelpMenu_Name" rMessage iIndex
+						TrudyRef.AuxVarSetRef "*HelpMenu_Entry" rMessage iIndex
+						TrudyRef.AuxVarSetFlt "*HelpMenu_Type" 0 iIndex
+						SunnyRef.AuxVarSetFlt ("*HelpMenu_" + (sCategory)) iIndex -1
+
+					; Custom body
+					elseif eval ar_HasKey aEntry "text"
+
+						; Translate
+						sTemp = aEntry["title"]
+						if eval sTemp[0] == "$"
+							sTemp = GetINIString_Cached ("Translations:" + (sTemp)) (sTranslationPath) (sTemp)
+						endif
+						TrudyRef.AuxVarSetStr "*HelpMenu_Name" (sTemp) iIndex
+						sTemp = aEntry["text"]
+						if eval sTemp[0] == "$"
+							sTemp = GetINIString_Cached ("Translations:" + (sTemp)) (sTranslationPath) (sTemp)
+						endif
+						TrudyRef.AuxVarSetStr "*HelpMenu_Entry" (sTemp) iIndex
+
+						TrudyRef.AuxVarSetFlt "*HelpMenu_Type" 1 iIndex
+						SunnyRef.AuxVarSetFlt ("*HelpMenu_" + (sCategory)) iIndex -1
+
+					; Custom xml
+					elseif eval ar_HasKey aEntry "xml"
+						sTemp = aEntry["xml"]
+
+						; Check if XML exists
+						if eval FileExists (sTemp[5:-1]) == 0 || (sv_ToLower sTemp[-4:-1]) != ".xml"
+							continue
+						endif
+						TrudyRef.AuxVarSetStr "*HelpMenu_Entry" (sTemp) iIndex
+
+						; Translate
+						sTemp = aEntry["title"]
+						if eval sTemp[0] == "$"
+							sTemp = GetINIString_Cached ("Translations:" + (sTemp)) (sTranslationPath) (sTemp)
+						endif
+						TrudyRef.AuxVarSetStr "*HelpMenu_Name" (sTemp) iIndex
+
+						TrudyRef.AuxVarSetFlt "*HelpMenu_Type" 2 iIndex
+						SunnyRef.AuxVarSetFlt ("*HelpMenu_" + (sCategory)) iIndex -1
+
+					; Pastebin
+					elseif eval ar_HasKey aEntry "pastebin"
+						if eval iSUPInstalled
+
+							; Translate
+							sTemp = aEntry["title"]
+							if eval sTemp[0] == "$"
+								sTemp = GetINIString_Cached ("Translations:" + (sTemp)) (sTranslationPath) (sTemp)
+							endif
+							TrudyRef.AuxVarSetStr "*HelpMenu_Name" (sTemp) iIndex
+
+							RunScriptSnippet 0 "SetUIStringAlt %qStartMenu\_HelpMenu+TEMP%q (GetPastebinRawTextString %q%z%q)" (aEntry["pastebin"])
+							TrudyRef.AuxVarSetStr "*HelpMenu_Entry" (GetUIString "StartMenu\_HelpMenu+TEMP") iIndex
+							TrudyRef.AuxVarSetFlt "*HelpMenu_Type" 1 iIndex
+							SunnyRef.AuxVarSetFlt ("*HelpMenu_" + (sCategory)) iIndex -1
+						else
+							continue
+						endif
+					endif
+
+					; Message form
+					if eval ar_HasKey aEntry "messageXbox" && IsFormValid (rMessage = EditorIDToFormID (aEntry["messageXbox"]))
+						TrudyRef.AuxVarSetRef "*HelpMenuXbox_Entry" rMessage iIndex
+						TrudyRef.AuxVarSetFlt "*HelpMenuXbox_Type" 0 iIndex
+
+					; Custom body
+					elseif eval ar_HasKey aEntry "textXbox"
+
+						; Translate
+						sTemp = aEntry["textXbox"]
+						if eval sTemp[0] == "$"
+							sTemp = GetINIString_Cached ("Translations:" + (sTemp)) (sTranslationPath) (sTemp)
+						endif
+						TrudyRef.AuxVarSetStr "*HelpMenuXbox_Entry" (sTemp) iIndex
+
+						TrudyRef.AuxVarSetFlt "*HelpMenuXbox_Type" 1 iIndex
+
+					; Custom xmlXbox
+					elseif eval ar_HasKey aEntry "xmlXbox" && FileExists (sTemp = aEntry["xmlXbox"][5:-1]) && (sv_ToLower sTemp[-4:-1]) == ".xml"
+						TrudyRef.AuxVarSetStr "*HelpMenuXbox_Entry" (aEntry["xmlXbox"]) iIndex
+						TrudyRef.AuxVarSetFlt "*HelpMenuXbox_Type" 2 iIndex
+
+					else
+						TrudyRef.AuxVarSetFlt "*HelpMenuXbox_Entry" 0 iIndex
+						TrudyRef.AuxVarSetFlt "*HelpMenuXbox_Type" -1 iIndex
+					endif
+
+					iIndex += 1
+
+				loop
+			loop
+		endif
+
+		; Close translation file
+		CloseFileSO (sTranslationPath) 0
+
+	loop
+
+	if eval iIndex > 0
+		PrintC "Modern Help Menu: Loaded %g help pages." iIndex
+	else
+		PrintC "Modern Help Menu: No help pages found."
+	endif
+
+endif
+
+TrudyRef.AuxVarSetFromArr "*HelpMenu_Categories" aCategories
+
+aCategories = aFiles = aJSON = aEntry = aCategory = aEntry = aForE1 = aForE2 = ar_Null
+
+sv_Destruct sJSONPath sTranslationPath sTemp sCategory

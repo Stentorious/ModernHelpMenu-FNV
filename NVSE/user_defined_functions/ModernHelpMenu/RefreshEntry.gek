@@ -1,0 +1,59 @@
+int iHelpIndex
+
+
+int iSearch
+int iIndex
+int iSize
+int iEntries
+int iType
+string_var sName
+string_var sTilePath
+string_var sSearch
+string_var sAux
+
+begin Function {sTilePath}
+
+	; Close dropdown
+	if eval GetUIFloatAlt ((sTilePath) + "\_expanded") == 1
+		UnloadUIComponent ((sTilePath) + "\Entries")
+		SetUIFloatAlt ((sTilePath) + "\_expanded") 0
+
+	; Open dropdown
+	else
+		AddTileFromTemplate ((sTilePath) + "|HelpMenuDropListTemplate|Entries")
+		iSearch = GetUIFloatAlt "StartMenu\_HelpMenu+Search"
+		sSearch = GetUIString "StartMenu\ModernHelpMenu\Search\_search_term"
+		sAux = "*HelpMenu_" + (GetUIString ((sTilePath) + "\_string"))
+
+		if eval (iSize = iEntries = SunnyRef.AuxVarSize (sAux)) > 0
+			iIndex = -1
+			while (iIndex += 1) < iSize
+
+				; Check entry type
+				iHelpIndex = SunnyRef.AuxVarGetFlt (sAux) iIndex
+				if eval TrudyRef.AuxVarGetFlt "*HelpMenu_Type" iHelpIndex == 0
+					sName = LnGetName (TrudyRef.AuxVarGetRef "*HelpMenu_Name" iHelpIndex)
+				else
+					sName = TrudyRef.AuxVarGetStr "*HelpMenu_Name" iHelpIndex
+				endif
+				if eval iSearch > 0 && (Sv_Find (sSearch) (sName)) == -1
+					iEntries -= 1
+					continue
+				endif
+
+				AddTileFromTemplate ((sTilePath) + "\Entries|HelpMenuEntryTemplate|Entry")
+				SetUIFloatAlt ((sTilePath) + "\Entries\Entry:0\_index") (iSize - iIndex - 1)
+				SetUIFloatAlt ((sTilePath) + "\Entries\Entry:0\_help") iHelpIndex
+				SetUIStringAlt ((sTilePath) + "\Entries\Entry:0\_string") "%z" sName
+			loop
+			SetUIFloatAlt ((sTilePath) + "\_entries") iEntries
+			SetUIFloatAlt ((sTilePath) + "\_expanded") 1
+		endif
+	endif
+
+	; Update scrollbar
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\_list_height" (GetMaxOf 0 (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:0\_total_height"))
+
+	Sv_Destruct sTilePath sSearch sName
+
+end

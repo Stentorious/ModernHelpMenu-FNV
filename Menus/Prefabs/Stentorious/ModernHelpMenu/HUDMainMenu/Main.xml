@@ -1,0 +1,9 @@
+<_HelpMenu+Darn> 0 </_HelpMenu+Darn>
+<_HelpMenu+Font>
+	<copy> 3 </copy>
+	<onlyifnot src="io()" trait="_HelpMenu+Darn" />
+	<add>
+		<copy> 6 </copy>
+		<onlyif src="io()" trait="_HelpMenu+Darn" />
+	</add>
+</_HelpMenu+Font>

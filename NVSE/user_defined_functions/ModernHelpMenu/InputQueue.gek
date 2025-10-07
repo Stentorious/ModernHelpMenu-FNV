@@ -1,0 +1,21 @@
+ref rOwner
+string_var sTimerName
+
+begin Function {sTimerName, rOwner}
+
+	if eval GetUIFloatAlt "StartMenu\_HelpMenu+Visible" == 0
+		sv_Destruct sTimerName
+		return
+	endif
+
+	if eval sTimerName == "*HelpMenu_QBut"
+		Call (CompileScript "ModernHelpMenu\OnButtonDown.gek") (Goo1.AuxVarGetFlt "*HelpMenu_QBut")
+	elseif eval sTimerName == "*HelpMenu_QKey"
+		Call (CompileScript "ModernHelpMenu\SearchInput.gek") (Goo1.AuxVarGetFlt "*HelpMenu_QKey")
+	elseif eval sTimerName == "*HelpMenu_Search"
+		Call (CompileScript "ModernHelpMenu\Search.gek") (GetUIString "StartMenu\ModernHelpMenu\Search\_search_text_1")
+	endif
+
+	sv_Destruct sTimerName
+
+End

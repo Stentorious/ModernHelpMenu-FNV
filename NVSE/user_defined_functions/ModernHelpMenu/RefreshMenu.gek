@@ -1,0 +1,63 @@
+int iSize
+array_var aEntry
+
+begin Function {}
+
+	; On menu init
+	if eval GetUIFloatAlt "StartMenu\_HelpMenu+Init" == 0
+		SetUIFloatAlt "StartMenu\_HelpMenu+Init" 1
+
+		; Enable smooth scrolling
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\_VUI+SmoothScrolling" 0
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\Scrollbar\_VUI+SmoothScrolling" 1
+
+		; Reset search terms
+		Goo1.AuxVarSetFlt "*HelpMenu_Cursor" 0
+		SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_term" "%e"
+		SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_text_1" "%e"
+		SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_cursor_1" "|"
+		SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_cursor_2" " "
+
+	endif
+
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\_search_count" 0
+
+	; Prevent loading menu if no dialogue history
+	if eval TrudyRef.AuxVarSize "*HelpMenu_Categories" < 1
+		return
+	endif
+
+	; Reset windows
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\visible" 1
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\visible" 0
+	UnloadUIComponent "StartMenu\ModernHelpMenu\WindowEntry\ListBox"
+	UnloadUIComponent "StartMenu\ModernHelpMenu\WindowDescription\ListBox"
+	AddTileFromTemplate "StartMenu\ModernHelpMenu\WindowEntry|HelpMenuListTemplate|ListBox"
+	AddTileFromTemplate "StartMenu\ModernHelpMenu\WindowDescription|HelpMenuDescTemplate|ListBox"
+
+	; Add entries
+	if eval GetUIFloatAlt "StartMenu\_HelpMenu+Search" > 0 && GetUIString "StartMenu\ModernHelpMenu\Search\_search_term" != ""
+		aEntry = TrudyRef.AuxVarGetAsArr "*HelpMenu_Search"
+	else
+		aEntry = TrudyRef.AuxVarGetAsArr "*HelpMenu_Categories"
+	endif
+	;aEntry = Ar_Sort aEntry 1
+	if eval (iSize = ar_Size aEntry) > 0
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\_search_count" 1
+		while (iSize -= 1) > -1
+			AddTileFromTemplate "StartMenu\ModernHelpMenu\WindowEntry\ListBox|HelpMenuCategoryTemplate|Entry"
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:0\_index" iSize
+			SetUIStringAlt "StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:0\_string" (aEntry[iSize])
+		loop
+	endif
+
+	; Update scrollbar
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\_list_height" (GetMaxOf 0 (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:0\_total_height"))
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\_list_height" 0
+
+	; Update selection
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\_selection_left" (GetMaxOf -1 ((GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\ListBox\childcount") - 1))
+
+	aEntry = Ar_Null
+
+end

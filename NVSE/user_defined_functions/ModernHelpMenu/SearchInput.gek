@@ -1,0 +1,107 @@
+int iKeyID
+
+int iCursorPos
+int iLength
+int iSearch
+string_var sSearch
+string_var sCursor
+
+begin Function {iKeyID}
+
+	if eval GetUIFloatAlt "StartMenu\_HelpMenu+Search" != 1 || MenuMode 3
+		return
+	endif
+
+	sSearch = GetUIString "StartMenu\ModernHelpMenu\Search\_search_text_1"
+	iCursorPos = Goo1.AuxVarGetFlt "*HelpMenu_Cursor"
+
+	; Update cursor position
+	if eval iKeyID == 203 || iKeyID == 205 || iKeyID == 199 || iKeyID == 207
+		iLength = sv_Length sSearch
+
+		; Left arrow
+		if eval iKeyID == 203
+			iCursorPos -= 1
+		; Right arrow
+		elseif eval iKeyID == 205
+			iCursorPos += 1
+		; Home
+		elseif eval iKeyID == 199
+			iCursorPos = 0
+		; End
+		elseif eval iKeyID == 207
+			iCursorPos = iLength
+		endif
+		iCursorPos = Clamp iCursorPos 0 iLength
+
+	; Enter
+	elseif eval iKeyID == 28
+		SetUIFloatAlt "StartMenu\_HelpMenu+Search" 2
+		sv_Destruct sSearch
+		PlaySound UIHackingCharEnter 1
+		return
+
+	; Ctrl-F
+	elseif eval iKeyID == 33 && (IsKeyPressed 29 2 || IsKeyPressed 157 2)
+		sv_Destruct sSearch
+		return
+
+	; Backspace
+	elseif eval iKeyID == 14
+		if eval iCursorPos > 0
+			iCursorPos -= 1
+			sSearch[iCursorPos] = ""
+			iSearch = 1
+		endif
+		PlaySound UIHackingCharSingle 1
+
+	; Space
+	elseif eval iKeyID == 57
+		sv_Insert " " sSearch iCursorPos
+		iCursorPos += 1
+		iSearch = 1
+		PlaySound UIHackingCharSingle 1
+
+	; Characters
+	else
+		if eval IsKeyPressed 42 2 == 0 && IsKeyPressed 54 2 == 0
+			sv_Insert (sv_ToLower (sv_Construct "%k" iKeyID)) sSearch iCursorPos
+		else
+			sv_Insert (sv_Construct "%k" iKeyID) sSearch iCursorPos
+		endif
+		iCursorPos += 1
+		iSearch = 1
+		PlaySound UIHackingCharSingle 1
+	endif
+
+	; Update string
+	SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_text_1" "%z" sSearch
+	SetUIFloatAlt "StartMenu\_HelpMenu+Search" 0
+	SetUIFloatAlt "StartMenu\_HelpMenu+Search" 1
+
+	; Update cursor
+	Goo1.AuxVarSetFlt "*HelpMenu_Cursor" iCursorPos
+	sCursor = sSearch
+	sv_Insert "|" sCursor iCursorPos
+	SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_cursor_1" (sCursor)
+	sCursor[iCursorPos] = " "
+	SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_cursor_2" (sCursor)
+	SetUIFloatGradual "StartMenu\_HelpMenu+Pulse" 1
+	SetUIFloatGradual "StartMenu\_HelpMenu+Pulse" 1 2.5 1 2
+
+	; Queue input
+	if eval Goo1.AuxVarType "*HelpMenu_QKey" == 0
+		AuxTimerStart "*HelpMenu_QKey" 0.5 13
+	else
+		AuxTimerStart "*HelpMenu_QKey" 0.05 13
+	endif
+	Goo1.AuxVarSetFlt "*HelpMenu_QKey" iKeyID
+
+	; Search
+	if eval iSearch == 1 || (iSearch == 2 && GetUIFloatAlt "StartMenu\ModernHelpMenu\Search\_search_count" > 0)
+		Call (CompileScript "ModernHelpMenu\Search.gek") (sSearch)
+	endif
+
+	sv_Destruct sSearch
+
+end

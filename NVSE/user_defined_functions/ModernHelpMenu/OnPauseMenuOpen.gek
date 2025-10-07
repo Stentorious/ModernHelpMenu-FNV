@@ -1,0 +1,14 @@
+int iMenuID
+
+Begin Function {iMenuID}
+
+	if eval GetVariable "FontStartMenu" (EditorIDToFormID "MAPMOMainQUEST")
+		SetUIStringAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\string" (sv_ToUpper GetUIString "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\string")
+		SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\font" 8
+	endif
+	SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\height" (GetUIFloatAlt "StartMenu\_item_height")
+ 	SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\button_text\wrapwidth" 0
+	SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\button_text\y" 11
+	CallAfterFrames 1 ({} => SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\width" ((GetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\button_text\width")+30))
+
+End

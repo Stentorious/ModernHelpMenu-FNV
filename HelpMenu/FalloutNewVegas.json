@@ -1,0 +1,72 @@
+{
+	"minMHMVersion": 1.0,
+	"categories": {
+		"0": {
+			"listTitle": "General",
+			"entries": {
+				"0": { "message": "HelpGlossary", "messageXbox": "HelpGlossaryXbox" }
+			}
+		},
+		"1": {
+			"listTitle": "Gameplay",
+			"entries": {
+				"0": { "message": "HelpGeneral", "messageXbox": "HelpGeneralXbox" },
+				"1": { "message": "HelpStealth" },
+				"2": { "message": "HelpVATS", "messageXbox": "HelpVATSXbox" },
+				"3": { "message": "HelpVATS2", "messageXbox": "HelpVATS2Xbox" },
+				"4": { "message": "HelpDialogue" },
+				"5": { "message": "HelpBarter" },
+				"6": { "message": "HelpHacking" },
+				"7": { "message": "HelpLockpicking", "messageXbox": "HelpLockpickingXbox" }
+			}
+		},
+		"2": {
+			"listTitle": "Character",
+			"entries": {
+				"0": { "message": "HelpPipBoyStats" },
+				"1": { "message": "HelpHealingLimbs", "messageXbox": "HelpHealingLimbsXbox" },
+				"2": { "message": "HelpCrippling" },
+				"3": { "message": "HelpRadiation" },
+				"4": { "message": "HelpDrugs" },
+				"5": { "message": "HelpHardcoreNeeds" },
+				"6": { "message": "HelpLeveling" },
+				"7": { "message": "HelpReputation" },
+				"8": { "message": "HelpKarma" },
+				"9": { "message": "HelpCrime" }
+			}
+		},
+		"3": {
+			"listTitle": "Equipment",
+			"entries": {
+				"0": { "message": "HelpWeapons" },
+				"1": { "message": "HelpAmmo", "messageXbox": "HelpAmmoXbox" },
+				"2": { "message": "HelpApparel" },
+				"3": { "message": "VFactionOutfitTutorial" },
+				"4": { "message": "HelpRecipe" },
+				"5": { "message": "HelpPipBoyItems" }
+			}
+		},
+		"4": {
+			"listTitle": "Interface",
+			"entries": {
+				"0": { "message": "HelpHotkeys", "messageXbox": "HelpHotkeysXbox" },
+				"1": { "message": "HelpCompass" },
+				"2": { "message": "HelpPipBoyData" },
+				"3": { "message": "HelpPipBoyQuest" },
+				"4": { "message": "HelpRadio" }
+			}
+		},
+		"5": {
+			"listTitle": "Mini-Games",
+			"entries": {
+				"0": { "message": "HelpBlackjack" },
+				"1": { "message": "HelpSlots" },
+				"2": { "message": "HelpRoulette" },
+				"3": { "message": "HelpCaravanBetting" },
+				"4": { "message": "HelpCaravanDeckBuilding" },
+				"5": { "message": "HelpCaravanStartingCaravans" },
+				"6": { "message": "HelpCaravanContractWar" }
+			}
+		}
+	}
+}

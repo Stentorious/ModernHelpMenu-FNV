@@ -1,0 +1,8 @@
+Stentorious\ModernHelpMenu\HUDMainMenu\Main.xml::HUDMainMenu
+true
+Stentorious\ModernHelpMenu\StartMenu\Main.xml::StartMenu
+true
+Stentorious\ModernHelpMenu\StartMenu\BackButtonClone.xml::StartMenu::NOGLOW_BRANCH
+true
+Stentorious\ModernHelpMenu\scrollbar_vert.xml::@Prefabs\scrollbar_vert.xml
+true

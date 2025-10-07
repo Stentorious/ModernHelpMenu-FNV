@@ -1,0 +1,15 @@
+float fStickY
+
+begin Function {}
+
+	if eval GetController == 0 || GetUIFloatAlt "StartMenu\_HelpMenu+Visible" != 1
+		return
+	endif
+
+	if eval (fStickY = GetRightStickY) > 0.2
+		ClickMenuTile "StartMenu\ModernHelpMenu\WindowDescription\Scrollbar\scrollbar_vert_up"
+	elseif fStickY < -0.2
+		ClickMenuTile "StartMenu\ModernHelpMenu\WindowDescription\Scrollbar\scrollbar_vert_down"
+	endif
+
+end

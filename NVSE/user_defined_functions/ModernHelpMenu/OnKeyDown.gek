@@ -1,0 +1,52 @@
+int	iKeyID
+
+float xmlCursorPosX
+float xmlCursorPosY
+
+begin Function {iKeyID}
+
+	; Ignore inputs
+	if eval GetUIFloatAlt "StartMenu\_HelpMenu+Visible" != 1 || MenuMode 3
+		return
+	endif
+
+	if eval iKeyID == 15 || (iKeyID == 18 && GetUIFloatAlt "StartMenu\_HelpMenu+Search" != 1)
+		SetUIFloatAlt "StartMenu\_HelpMenu+Visible" 0
+		SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\main_container\_enabled" 1
+		CallAfter 0.2 ({} => EnableButton 8192) 1
+		PlaySound UIMenuCancel 1
+		return
+	endif
+
+	; Ctrl + F (Search Bar)
+	if eval iKeyID == 33 && (IsKeyPressed 29 2 || IsKeyPressed 157 2)
+		if eval GetUIFloatAlt "StartMenu\_HelpMenu+Search" != 1
+			ClickMenuButton "StartMenu#706"
+		else
+			if eval GetUIString "StartMenu\ModernHelpMenu\Search\_search_term" != ""
+				SetUIFloatAlt "StartMenu\_HelpMenu+Search" 2
+			else
+				ClickMenuButton "StartMenu#707"
+			endif
+		endif
+		return
+	endif
+
+	; Mouse Wheel
+	xmlCursorPosX = (((GetUIFloatAlt "StartMenu\_screen_width") / (Goo1.AuxVarGetFlt "*_ScreenWidth")) * (GetCursorPos X)) - GetUIFloatAlt "StartMenu\ModernHelpMenu\x"
+	xmlCursorPosY = (((GetUIFloatAlt "StartMenu\_screen_height") / (Goo1.AuxVarGetFlt "*_ScreenHeight")) * (GetCursorPos Y)) - GetUIFloatAlt "StartMenu\ModernHelpMenu\y"
+	if eval xmlCursorPosX > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\x" && xmlCursorPosX < (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\x" + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\width") && xmlCursorPosY > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\y" && xmlCursorPosY < (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\y" + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\height")
+		if eval iKeyID == 264
+			ClickMenuTile "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\scrollbar_vert_up"
+		elseif eval iKeyID == 265
+			ClickMenuTile "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\scrollbar_vert_down"
+		endif
+	elseif eval xmlCursorPosX > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\x" && xmlCursorPosX < (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\x" + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\width") && xmlCursorPosY > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\y" && xmlCursorPosY < (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\y" + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\height")
+		if eval iKeyID == 264
+			ClickMenuTile "StartMenu\ModernHelpMenu\WindowDescription\Scrollbar\scrollbar_vert_up"
+		elseif eval iKeyID == 265
+			ClickMenuTile "StartMenu\ModernHelpMenu\WindowDescription\Scrollbar\scrollbar_vert_down"
+		endif
+	endif
+
+end

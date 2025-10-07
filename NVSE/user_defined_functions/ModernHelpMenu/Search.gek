@@ -1,0 +1,74 @@
+string_var sSearch
+
+int iSize
+int iIndex
+array_var aSearchIDs
+array_var aTemp
+array_var aEntries
+string_var sEntry
+
+begin Function {sSearch}
+
+	; Don't update search if entering previous term
+	if eval GetUIString "StartMenu\ModernHelpMenu\Search\_search_term" == (sSearch)
+		return
+	endif
+
+	SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_term" (sSearch)
+
+	; Prevent search if no dialog history
+	if eval TrudyRef.AuxVarSize "*HelpMenu_Categories" == 0
+		return
+	endif
+
+	; Reset search array
+	TrudyRef.AuxVarErase "*HelpMenu_Search"
+
+	if eval sSearch == ""
+		sv_Destruct sSearch
+		Call (CompileScript "ModernHelpMenu\RefreshMenu.gek")
+		return
+	endif
+
+	aSearchIDs = ar_Construct "array"
+
+	aEntries = TrudyRef.AuxVarGetAsArr "*HelpMenu_Name"
+	iSize = Ar_Size aEntries
+	while (iSize -= 1) > -1
+		if eval (TypeOf (aEntries[iSize])) == "Form"
+			sEntry = LnGetName (aEntries[iSize])
+		else
+			sEntry = aEntries[iSize]
+		endif
+		if eval (Sv_Find (sSearch) (sEntry)) > -1
+			ar_Append aSearchIDs iSize
+		endif
+	loop
+
+	; Early return when we know the search will fails
+	if eval (Ar_Size aSearchIDs) < 1
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\_search_count" 0
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\visible" 0
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\visible" 0
+		aEntries = aSearchIDs = aTemp = Ar_Null
+		sv_Destruct sSearch
+		return
+	endif
+
+	; Build filtered category list
+	iSize = TrudyRef.AuxVarSize "*HelpMenu_Categories"
+	iIndex = -1
+	while (iIndex += 1) < iSize
+		aTemp = SunnyRef.AuxVarGetAsArr ("*HelpMenu_" + (TrudyRef.AuxVarGetStr "*HelpMenu_Categories" iIndex))
+		ar_Cat aTemp aSearchIDs
+		if eval (ar_Size aTemp) != (ar_Size (ar_Unique aTemp))
+			TrudyRef.AuxVarSetStr "*HelpMenu_Search" (TrudyRef.AuxVarGetStr "*HelpMenu_Categories" iIndex) -1
+		endif
+	loop
+
+	aEntries = aSearchIDs = aTemp = Ar_Null
+	sv_Destruct sSearch sEntry
+
+	Call (CompileScript "ModernHelpMenu\RefreshMenu.gek")
+
+end

@@ -1,0 +1,3 @@
+; Input events
+SetOnAuxTimerStopHandler 1 (CompileScript "ModernHelpMenu\InputQueue.gek") "*HelpMenu_QKey"
+SetOnAuxTimerStopHandler 1 (CompileScript "ModernHelpMenu\InputQueue.gek") "*HelpMenu_QBut"

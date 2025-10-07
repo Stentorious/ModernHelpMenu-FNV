@@ -1,0 +1,86 @@
+int iMenuID
+int iTileID
+string_var sTileName
+
+begin Function {iMenuID, iTileID, sTileName}
+
+	; Help button
+	if eval sTileName == "lb_item_hotrect" && GetUIString (GetActiveUIComponentFullName + "/string") == GetStringSetting "sHelp"
+		if eval GetUIFloatAlt "StartMenu\_HelpMenu+Visible" == 0
+			CallAfterFrames 1 (begin function {}
+				if eval GetActiveMenuMode == 1059
+					CloseActiveMenu
+				endif
+			end) 1
+			if eval GetUIFloatAlt "StartMenu\_HelpMenu+Init" == 0
+				Goo1.AuxVarSetStr "*HelpMenuButton" (GetActiveUIComponentFullName)
+				Call (CompileScript "ModernHelpMenu\RefreshMenu.gek")
+			endif
+			CallAfterFrames 1 ({} => SetUIFloatAlt "StartMenu\_HelpMenu+Visible" 1) 1
+			DisableButton 8192
+			PlaySound UIMenuOk 1
+		else
+			SetUIFloatAlt "StartMenu\_HelpMenu+Visible" 0
+			SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\main_container\_enabled" 1
+			CallAfter 0.2 ({} => EnableButton 8192) 1
+			PlaySound UIMenuCancel 1
+		endif
+		return
+
+	; main_container
+	elseif eval sTileName == "main_container"
+		if eval GetUIFloatAlt "StartMenu\_HelpMenu+Visible" == 1
+			SetUIFloatAlt "StartMenu\_HelpMenu+Visible" 0
+			SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\main_container\_enabled" 1
+			CallAfter 0.2 ({} => EnableButton 8192) 1
+			PlaySound UIMenuCancel 1
+		endif
+		return
+
+	; Dropdown (Parent)
+	elseif eval iTileID == 703
+		if eval (sTileName = GetActiveUIComponentFullName) == ""
+			sTileName = Goo1.AuxVarGetStr "*ModernHelpMenuButton"
+		endif
+		Call (CompileScript "ModernHelpMenu\RefreshEntry.gek") (sTileName)
+
+	; Dropdown (Child)
+	elseif eval iTileID == 704
+		if eval (sTileName = GetActiveUIComponentFullName) == ""
+			sTileName = Goo1.AuxVarGetStr "*ModernHelpMenuButton"
+		endif
+		Call (CompileScript "ModernHelpMenu\RefreshPage.gek") (sTileName)
+
+	; Search Bar
+	elseif eval iTileID == 706 || (iTileID == 707 && GetUIFloatAlt "StartMenu\_HelpMenu+Search" == 0)
+		SetUIFloatGradual "StartMenu\_HelpMenu+Pulse" 2
+		SetUIFloatGradual "StartMenu\_HelpMenu+Pulse" 2 0 1 2
+		CallAfterFrames 0 ({} => SetUIFloatAlt "StartMenu\_HelpMenu+Search" 1) 1
+
+	; Search Reset
+	elseif eval iTileID == 707
+		Goo1.AuxVarSetFlt "*HelpMenu_Cursor" 0
+		SetUIFloatAlt "StartMenu\_HelpMenu+Search" 0
+		SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_text_1" "%e"
+		SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_cursor_1" "|"
+		SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_cursor_2" " "
+		if eval GetUIString "StartMenu\ModernHelpMenu\Search\_search_term" != ""
+			SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_term" "%e"
+			Goo1.AuxVarErase "*HelpMenu_Search"
+			Call (CompileScript "ModernHelpMenu\RefreshMenu.gek")
+		endif
+
+	elseif eval iTileID == 708
+		if eval GetUIFloatAlt "StartMenu\_HelpMenu+Visible" == 1
+			SetUIFloatAlt "StartMenu\_HelpMenu+Visible" 0
+			SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\main_container\_enabled" 1
+			CallAfter 0.2 ({} => EnableButton 8192) 1
+			PlaySound UIMenuCancel 1
+		endif
+		return
+
+	endif
+
+	sv_Destruct sTileName
+
+end

@@ -1,0 +1,868 @@
+﻿<_HelpMenu+Init>0</_HelpMenu+Init>
+<_HelpMenu+Visible> 0 </_HelpMenu+Visible>
+<_HelpMenu+Search> 0 </_HelpMenu+Search>
+<_HelpMenu+Pulse> 0 </_HelpMenu+Pulse>
+<_HelpMenu+TEMP> 0 </_HelpMenu+TEMP>
+
+<_HelpMenu+Darn> <copy src="sibling(HUDMainMenu)" trait="_HelpMenu+Darn" /> </_HelpMenu+Darn>
+<_HelpMenu+Font> <copy src="sibling(HUDMainMenu)" trait="_HelpMenu+Font" /> </_HelpMenu+Font>
+<_HelpMenu+Systemcolor> <copy src="child(NOGLOW_BRANCH)" trait="systemcolor"/> </_HelpMenu+Systemcolor>
+
+<!-- Game -->
+<_controller> <copy src="globals()" trait="_Has360Controller"/> </_controller>
+<_screen_width> <copy src="screen()" trait="width" /> </_screen_width>
+<_screen_height> <copy src="screen()" trait="height" /> </_screen_height>
+
+<rect name="ModernHelpMenu">
+
+	<!-- Menu strings -->
+	<_text_title> Help Menu </_text_title>
+	<_text_no_history> No help menu entries found... </_text_no_history>
+
+	<!-- Menu layout -->
+	<_offset_x> 0 </_offset_x>
+	<_offset_y> 0 </_offset_y>
+	<_width>
+		<copy src="io()" trait="_screen_width" />
+		<sub> 200 </sub>
+		<min> 1500 </min>
+	</_width>
+	<_height>
+		<copy src="io()" trait="_screen_height" />
+		<sub> 200 </sub>
+	</_height>
+	<_background_offset> 6 </_background_offset>
+	<_height_fade> 50 </_height_fade>
+	<_wrapwidth>
+		<copy src="me()" trait="_width" />
+		<sub src="child(Outline_VTM)" trait="x" />
+		<sub> 60 </sub>
+	</_wrapwidth>
+
+	<_wrapwidthdate>
+		<copy src="child(Outline_VTM)" trait="x" />
+		<sub> 35 </sub>
+	</_wrapwidthdate>
+	<_wrapwidthname>
+		<copy src="me()" trait="_wrapwidthdate" />
+		<sub> 20 </sub>
+	</_wrapwidthname>
+
+	<!-- Scroll bar -->
+	<_scrolldelta_controller> 3 </_scrolldelta_controller>
+	<_scrolldelta>
+		<copy> 0 </copy>
+		<add>
+			<copy> 36 </copy>
+			<onlyifnot src="globals()" trait="_Has360Controller"/>
+		</add>
+		<add>
+			<copy src="me()" trait="_scrolldelta_controller"/>
+			<onlyif src="globals()" trait="_Has360Controller"/>
+		</add>
+		<max> 0.1 </max>
+	</_scrolldelta>
+	<_list_height_extra> 17 </_list_height_extra>
+
+	<!-- Controller selection -->
+	<_selection_left> -1 </_selection_left>
+	<_selection_left_child> -1 </_selection_left_child>
+	<_selection_left_input>
+		<copy> -1 </copy>
+		<add>
+			<copy src="me()" trait="_selection_left"/>
+			<add> 1 </add>
+			<onlyif src="io()" trait="_controller"/>
+		</add>
+	</_selection_left_input>
+	<_selection_left_child_input>
+		<copy> -1 </copy>
+		<add>
+			<copy src="me()" trait="_selection_left_child"/>
+			<add> 1 </add>
+			<onlyif src="io()" trait="_controller"/>
+		</add>
+	</_selection_left_child_input>
+
+	<!-- Vanilla traits -->
+	<visible> <copy src="io()" trait="_HelpMenu+Visible" /> </visible>
+	<locus> 1 </locus>
+	<depth> 500 </depth>
+	<x>
+		<copy src="io()" trait="_screen_width" />
+		<sub src="me()" trait="_width" />
+		<div> 2 </div>
+		<add src="me()" trait="_offset_x" />
+	</x>
+	<y>
+		<copy src="io()" trait="_screen_height" />
+		<sub src="me()" trait="_height" />
+		<div> 2 </div>
+		<add src="me()" trait="_offset_y" />
+	</y>
+
+	<!-- Search bar -->
+	<rect name="Search">
+		<_search>
+			<copy src="io()" trait="_HelpMenu+Search" />
+			<copy src="me()" trait="_search_text_" />
+		</_search>
+		<_search_count> 0 </_search_count>
+		<_search_fail>
+			<not src="me()" trait="_search_count" />
+			<and>
+				<copy src="io()" trait="_HelpMenu+Search" />
+				<gt> 0 </gt>
+			</and>
+		</_search_fail>
+		<_search_term> Search Term </_search_term>
+		<_search_cursor_1> | </_search_cursor_1>
+		<_search_cursor_2> | </_search_cursor_2>
+		<_search_text_0> Search (CTRL-F) </_search_text_0>
+		<_search_text_1> Search Term </_search_text_1>
+		<_search_text_2> <copy src="me()" trait="_search_text_1" /> </_search_text_2>
+		<_search_brightness_0> 75 </_search_brightness_0>
+		<_search_brightness_1> 204 </_search_brightness_1>
+		<_search_brightness_2> 204 </_search_brightness_2>
+		<_icon_search_0> Interface\Stentorious\ModernHelpMenu\SearchInit.dds </_icon_search_0>
+		<_icon_search_1> Interface\Stentorious\ModernHelpMenu\SearchStop.dds </_icon_search_1>
+		<_icon_search_2> Interface\Stentorious\ModernHelpMenu\SearchStop.dds </_icon_search_2>
+		<_icon_sort_0> Interface\Stentorious\ModernHelpMenu\SortDate.dds </_icon_sort_0>
+		<_icon_sort_1> Interface\Stentorious\ModernHelpMenu\SortLocation.dds </_icon_sort_1>
+
+		<visible> 1 </visible>
+		<locus> 1 </locus>
+		<x>
+			<copy src="sibling(Outline_VTL)" trait="x" />
+			<add src="globals()" trait="_line_thickness"/>
+			<add> 10 </add>
+		</x>
+		<y>
+			<copy src="sibling(Outline_VTL)" trait="y" />
+			<add src="globals()" trait="_line_thickness"/>
+			<add> 10 </add>
+		</y>
+		<depth> 10 </depth>
+		<_width>
+			<copy src="sibling(Outline_VTM)" trait="x" />
+			<sub src="sibling(Outline_VTL)" trait="x" />
+			<sub> 20 </sub>
+			<sub src="globals()" trait="_line_thickness"/>
+		</_width>
+		<_height> 36 </_height>
+
+		<hotrect name="SearchBar">
+			<id> 706 </id>
+			<visible> 1 </visible>
+			<x> 4 </x>
+			<target>
+				<copy src="io()" trait="_HelpMenu+Search" />
+				<neq> 1 </neq>
+			</target>
+			<alpha> 0 </alpha>
+			<locus> 1 </locus>
+			<width> <copy src="parent()" trait="_width" /> </width>
+			<height> <copy src="parent()" trait="_height" /> </height>
+			<mouseoversound> UIMenuFocus </mouseoversound>
+			<clicksound> UIMenuMode </clicksound>
+			<clipwindow> 1 </clipwindow>
+
+			<image name="Background">
+				<visible> 1 </visible>
+				<x> -4 </x>
+				<y> 0 </y>
+				<depth> 0 </depth>
+				<width> <copy src="parent()" trait="width" /> </width>
+				<height> <copy src="parent()" trait="height" /> </height>
+				<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+				<brightness> 204 </brightness>
+				<zoom> -1 </zoom>
+				<filename> Interface\Shared\solid.dds </filename>
+			</image>
+
+			<image name="Window">
+				<visible> 1 </visible>
+				<x>
+					<copy src="globals()" trait="_line_thickness"/>
+					<sub> 4 </sub>
+				</x>
+				<y> <copy src="globals()" trait="_line_thickness"/> </y>
+				<depth> 1 </depth>
+				<width>
+					<copy src="sibling(Background)" trait="width" />
+					<sub src="globals()" trait="_line_thickness"/>
+					<sub src="globals()" trait="_line_thickness"/>
+				</width>
+				<height>
+					<copy src="sibling(Background)" trait="height" />
+					<sub src="globals()" trait="_line_thickness"/>
+					<sub src="globals()" trait="_line_thickness"/>
+				</height>
+				<systemcolor> 0 </systemcolor>
+				<red> 0 </red>
+				<green> 0 </green>
+				<blue> 0 </blue>
+				<zoom> -1 </zoom>
+				<filename> Interface\Shared\solid.dds </filename>
+			</image>
+
+			<text name="Text">
+				<visible> <not src="sibling(TextCursor)" trait="visible" /> </visible>
+				<x>
+					<copy> 4 </copy>
+					<add>
+						<copy src="sibling(Icon)" trait="x" />
+						<sub src="me()" trait="width" />
+						<sub> 16 </sub>
+						<min> 0 </min>
+					</add>
+				</x>
+				<y> 10 </y>
+				<depth> 2 </depth>
+				<clips> 1 </clips>
+				<systemcolor>
+					<copy> 0 </copy>
+					<add>
+						<copy> 2 </copy>
+						<onlyif src="grandparent()" trait="_search_fail" />
+					</add>
+					<add>
+						<copy src="io()" trait="_HelpMenu+Systemcolor" />
+						<onlyifnot src="grandparent()" trait="_search_fail" />
+					</add>
+				</systemcolor>
+				<brightness>
+					<copy src="io()" trait="_HelpMenu+Search" />
+					<copy src="grandparent()" trait="_search_brightness_" />
+				</brightness>
+				<font> <copy src="io()" trait="_HelpMenu+Font" /> </font>
+				<string> <copy src="grandparent()" trait="_search" /> </string>
+			</text>
+
+			<text name="TextCursor">
+				<visible>
+					<copy src="io()" trait="_HelpMenu+Search" />
+					<eq> 1 </eq>
+				</visible>
+				<x> <copy src="sibling(Text)" trait="x" /> </x>
+				<y> 10 </y>
+				<depth> 2 </depth>
+				<clips> 1 </clips>
+				<systemcolor> <copy src="sibling(Text)" trait="systemcolor" /> </systemcolor>
+				<brightness> <copy src="grandparent()" trait="_search_brightness_1" /> </brightness>
+				<font> <copy src="io()" trait="_HelpMenu+Font" /> </font>
+				<_string>
+					<copy src="io()" trait="_HelpMenu+Pulse" />
+					<copy src="grandparent()" trait="_search_cursor_" />
+				</_string>
+				<string> <copy src="me()" trait="_string" /> </string>
+			</text>
+
+			<image name="Icon">
+				<id> 707 </id>
+				<visible> 1 </visible>
+				<target> 1 </target>
+				<x>
+					<copy src="sibling(Window)" trait="x" />
+					<add src="sibling(Window)" trait="width" />
+					<sub src="me()" trait="width" />
+					<sub> 3 </sub>
+				</x>
+				<y>
+					<copy src="sibling(Window)" trait="y" />
+					<add> 3 </add>
+				</y>
+				<depth> 2 </depth>
+				<width> <copy src="me()" trait="height" /> </width>
+				<height>
+					<copy src="sibling(Window)" trait="height" />
+					<sub> 6 </sub>
+				</height>
+				<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+				<zoom> -1 </zoom>
+				<filename>
+					<copy src="io()" trait="_HelpMenu+Search" />
+					<copy src="grandparent()" trait="_icon_search_" />
+				</filename>
+				<mouseoversound> UIMenuFocus </mouseoversound>
+				<clicksound> UIMenuMode </clicksound>
+			</image>
+
+		</hotrect>
+
+	</rect>
+
+	<!-- Outlines -->
+	<image name="Outline_VTM">
+		<x>
+			<copy src="parent()" trait="_width" />
+			<div> 4 </div>
+		</x>
+		<y> 0 </y>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height> <copy src="parent()" trait="_height_fade" /> </height>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<filename> fade_to_bottom.dds </filename>
+		<texatlas> Interface\InterfaceShared.tai </texatlas>
+	</image>
+	<image name="Outline_VBM">
+		<x> <copy src="sibling(Outline_VTM)" trait="x" /> </x>
+		<y>
+			<copy src="parent()" trait="_height" />
+			<sub src="me()" trait="height" />
+		</y>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height> <copy src="parent()" trait="_height_fade" /> </height>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<filename> fade_to_top.dds </filename>
+		<texatlas> Interface\InterfaceShared.tai </texatlas>
+	</image>
+	<image name="Outline_VTL">
+		<x>
+			<copy> 0 </copy>
+			<sub src="globals()" trait="_line_thickness"/>
+		</x>
+		<y> 0 </y>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height> <copy src="parent()" trait="_height_fade" /> </height>
+		<zoom> -1 </zoom>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<filename> fade_to_bottom.dds </filename>
+		<texatlas> Interface\InterfaceShared.tai </texatlas>
+	</image>
+	<image name="Outline_VTR">
+		<x> <copy src="parent()" trait="_width" /> </x>
+		<y> <copy src="sibling(Outline_VTL)" trait="y" /> </y>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height> <copy src="parent()" trait="_height_fade" /> </height>
+		<zoom> -1 </zoom>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<filename> fade_to_bottom.dds </filename>
+		<texatlas> Interface\InterfaceShared.tai </texatlas>
+	</image>
+	<image name="Outline_VBL">
+		<x> <copy src="sibling(Outline_VTL)" trait="x" /> </x>
+		<y>
+			<copy src="parent()" trait="_height" />
+			<sub src="me()" trait="height" />
+		</y>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height> <copy src="parent()" trait="_height_fade" /> </height>
+		<zoom> -1 </zoom>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<filename> fade_to_top.dds </filename>
+		<texatlas> Interface\InterfaceShared.tai </texatlas>
+	</image>
+	<image name="Outline_VBR">
+		<x> <copy src="sibling(Outline_VTR)" trait="x" /> </x>
+		<y> <copy src="sibling(Outline_VBL)" trait="y" /> </y>
+		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<height> <copy src="parent()" trait="_height_fade" /> </height>
+		<zoom> -1 </zoom>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<filename> fade_to_top.dds </filename>
+		<texatlas> Interface\InterfaceShared.tai </texatlas>
+	</image>
+	<image name="Outline_HT">
+		<x> <copy src="sibling(Outline_VTL)" trait="x" /> </x>
+		<y>
+			<copy src="sibling(Outline_VTL)" trait="y" />
+			<sub src="globals()" trait="_line_thickness"/>
+		</y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<add src="globals()" trait="_line_thickness"/>
+			<add src="globals()" trait="_line_thickness"/>
+		</width>
+		<height> <copy src="globals()" trait="_line_thickness"/> </height>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Outline_HBL">
+		<x> <copy src="sibling(Outline_VTL)" trait="x" /> </x>
+		<y>
+			<copy> 0 </copy>
+			<add src="parent()" trait="_height" />
+		</y>
+		<width> <copy src="parent()" trait="_height_fade" /> </width>
+		<height> <copy src="globals()" trait="_line_thickness"/> </height>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Outline_HBR">
+		<x>
+			<copy src="sibling(TitleText)" trait="x" />
+			<add src="sibling(TitleText)" trait="width" />
+			<add> 10 </add>
+		</x>
+		<y> <copy src="sibling(Outline_HBL)" trait="y" /> </y>
+		<width>
+			<copy src="sibling(Outline_HT)" trait="width" />
+			<sub src="sibling(TitleText)" trait="x" />
+			<sub src="sibling(TitleText)" trait="width" />
+			<sub> 10 </sub>
+			<sub src="globals()" trait="_line_thickness"/>
+		</width>
+		<height> <copy src="globals()" trait="_line_thickness"/> </height>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="TitleIcon">
+		<x>
+			<copy src="sibling(Outline_HBL)" trait="x" />
+			<add src="sibling(Outline_HBL)" trait="width"/>
+			<sub> 24 </sub>
+		</x>
+		<y>
+			<copy src="sibling(Outline_HBL)" trait="y"/>
+			<add>
+				<copy src="sibling(Outline_HBL)" trait="height"/>
+				<sub src="me" trait="height"/>
+				<div> 2 </div>
+				<add> 1 </add>
+			</add>
+		</y>
+		<width> 128 </width>
+		<height> 64 </height>
+		<zoom> &scale; </zoom>
+		<filename> Interface\Loading\glow_loading_VDSGSymbol.dds </filename>
+	</image>
+	<text name="TitleText">
+		<x>
+			<copy src="sibling(TitleIcon)" trait="x"/>
+			<add src="sibling(TitleIcon)" trait="width"/>
+			<sub> 24 </sub>
+		</x>
+		<y>
+			<copy src="sibling(TitleIcon)" trait="y"/>
+			<add>
+				<copy src="sibling(TitleIcon)" trait="height"/>
+				<sub src="me()" trait="height"/>
+				<div> 2 </div>
+				<add> 7 </add>
+			</add>
+			<sub>
+				<copy> 7 </copy>
+				<onlyif src="io()" trait="_HelpMenu+Darn"/>
+			</sub>
+		</y>
+		<font> 1 </font>
+		<string> <copy src="parent()" trait="_text_title"/></string>
+	</text>
+
+	<image name="Background">
+		<visible> 1 </visible>
+		<alpha> 204 </alpha>
+		<depth> -2 </depth>
+		<x>
+			<copy> 0 </copy>
+			<sub src="parent()" trait="_background_offset" />
+		</x>
+		<y> <copy src="me()" trait="x" /> </y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<add src="parent()" trait="_background_offset" />
+			<add src="parent()" trait="_background_offset" />
+		</width>
+		<height>
+			<copy src="parent()" trait="_height" />
+			<add src="parent()" trait="_background_offset" />
+			<add src="parent()" trait="_background_offset" />
+		</height>
+		<zoom> &scale; </zoom>
+		<systemcolor> 0 </systemcolor>
+		<red> 0 </red>
+		<green> 0 </green>
+		<blue> 0 </blue>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+
+	<!-- Menu strings -->
+	<text name="EntryTitle">
+		<visible> <copy src="sibling(WindowDescription)" trait="visible" /> </visible>
+		<x>
+			<copy src="sibling(WindowDescription)" trait="width" />
+			<div> 2 </div>
+			<add src="sibling(WindowDescription)" trait="x" />
+		</x>
+		<y>
+			<copy> 35 </copy>
+			<sub>
+				<copy> 12.5 </copy>
+				<onlyif src="io()" trait="_HelpMenu+Darn" />
+			</sub>
+		</y>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<font> 7 </font>
+		<zoom> 150 </zoom>
+		<justify> &center; </justify>
+		<string> NPC Name </string>
+	</text>
+	<text name="NoHistoryFound">
+		<visible> <not src="sibling(Search)" trait="_search_count" /> </visible>
+		<x>
+			<copy src="parent()" trait="_width" />
+			<div> 2 </div>
+		</x>
+		<y>
+			<copy src="parent()" trait="_height" />
+			<sub src="me()" trait="height" />
+			<div> 2 </div>
+			<add> 10 </add>
+		</y>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<font> 2 </font>
+		<zoom> 150 </zoom>
+		<justify> &center; </justify>
+		<string> <copy src="parent()" trait="_text_no_history" /> </string>
+	</text>
+
+	<hotrect name="WindowDescription">
+
+		<_list_height> 0 </_list_height>
+
+		<visible> 0 </visible>
+		<x>
+			<copy src="sibling(Outline_VTM)" trait="x" />
+			<add> 20 </add>
+		</x>
+		<y>
+			<copy src="sibling(EntryTitle)" trait="y" />
+			<add src="sibling(EntryTitle)" trait="height" />
+			<add> 5 </add>
+		</y>
+		<width>
+			<copy src="parent()" trait="_width" />
+			<sub src="me()" trait="x" />
+			<sub> 5 </sub>
+		</width>
+		<height>
+			<copy src="parent()" trait="_height" />
+			<sub src="me()" trait="y" />
+			<sub> 20 </sub>
+		</height>
+		<locus> 1 </locus>
+		<clipwindow> 1 </clipwindow>
+
+		<hotrect name="Scrollbar">
+			<include src="scrollbar_vert.xml"/>
+			<_x>
+				<copy src="parent()" trait="width"/>
+				<sub> 11 </sub>
+			</_x>
+			<y>
+				<copy> 65 </copy>
+				<sub src="parent()" trait="y" />
+			</y>
+			<_height>
+				<copy src="grandparent()" trait="_height" />
+				<sub> 100 </sub>
+			</_height>
+			<_scrolldelta> <copy src="grandparent" trait="_scrolldelta"/> </_scrolldelta>
+			<_number_of_items>
+				<copy src="parent()" trait="_list_height"/>
+				<add src="grandparent()" trait="_list_height_extra"/>
+				<sub> 20 </sub>
+				<div src="me()" trait="_scrolldelta" />
+			</_number_of_items>
+			<_number_of_visible_items>
+				<copy src="parent" trait="height"/>
+				<div src="me()" trait="_scrolldelta" />
+			</_number_of_visible_items>
+		</hotrect>
+
+	</hotrect>
+
+	<hotrect name="WindowEntry">
+
+		<_list_height> 0 </_list_height>
+
+		<visible> 0 </visible>
+		<x> 5 </x>
+		<y>
+			<copy src="sibling(Search)" trait="y"/>
+			<add src="sibling(Search)" trait="_height"/>
+			<add> 20 </add>
+		</y>
+		<width> <copy src="sibling(Outline_VTM)" trait="x"/> </width>
+		<height>
+			<copy src="sibling(Outline_HBL)" trait="y" />
+			<sub src="me()" trait="y"/>
+			<sub> 20 </sub>
+		</height>
+		<locus> 1 </locus>
+		<clipwindow> 1 </clipwindow>
+
+		<hotrect name="Scrollbar">
+			<include src="scrollbar_vert.xml"/>
+			<_x>
+				<copy src="parent()" trait="width"/>
+				<sub> 20 </sub>
+			</_x>
+			<y>
+				<copy> 65 </copy>
+				<sub src="parent()" trait="y" />
+			</y>
+			<_height>
+				<copy src="grandparent()" trait="_height" />
+				<sub> 100 </sub>
+			</_height>
+			<_scrolldelta> 36 </_scrolldelta>
+			<_number_of_items>
+				<copy src="parent()" trait="_list_height"/>
+				<add src="grandparent()" trait="_list_height_extra"/>
+				<sub> 29 </sub>
+				<div src="me()" trait="_scrolldelta" />
+			</_number_of_items>
+			<_number_of_visible_items>
+				<copy src="parent" trait="height"/>
+				<div src="me()" trait="_scrolldelta" />
+			</_number_of_visible_items>
+		</hotrect>
+
+	</hotrect>
+
+</rect>
+
+<!-- Window list box template -->
+<template name="HelpMenuDescTemplate">
+	<rect name="HelpMenuDescTemplate">
+		<visible> 1 </visible>
+		<alpha> 0 </alpha>
+		<y>
+			<copy> 0 </copy>
+			<sub>
+				<copy src="sibling(Scrollbar)" trait="_current_value"/>
+				<mul src="sibling(Scrollbar)" trait="_scrolldelta"/>
+			</sub>
+			<add> 5 </add>
+		</y>
+		<locus> 1 </locus>
+	</rect>
+</template>
+
+<!-- Window list box template -->
+<template name="HelpMenuListTemplate">
+	<rect name="HelpMenuListTemplate">
+		<visible> 1 </visible>
+		<alpha> 0 </alpha>
+		<y>
+			<copy> 0 </copy>
+			<sub>
+				<copy src="sibling(Scrollbar)" trait="_current_value"/>
+				<mul src="sibling(Scrollbar)" trait="_scrolldelta"/>
+			</sub>
+			<sub> 9 </sub>
+		</y>
+		<locus> 1 </locus>
+	</rect>
+</template>
+
+<!-- Dropdown entry list box template -->
+<template name="HelpMenuDropListTemplate">
+	<rect name="HelpMenuDropListTemplate">
+		<visible> <copy src="parent()" trait="_expanded" /> </visible>
+		<alpha> 0 </alpha>
+		<x> 5 </x>
+		<y> 47 </y>
+		<locus> 1 </locus>
+	</rect>
+</template>
+
+
+<!-- Date entry template -->
+<template name="HelpMenuCategoryTemplate">
+	<hotrect name="HelpMenuCategoryTemplate">
+
+		<_index> 0 </_index>
+		<_time> 0 </_time>
+		<_expanded> 0 </_expanded>
+		<_entries> 0 </_entries>
+		<_string> Help </_string>
+		<_height>
+			<copy src="me()" trait="_entries" />
+			<mul> 36 </mul>
+			<mul src="me()" trait="_expanded" />
+			<add> 36 </add>
+		</_height>
+		<_total_height>
+			<copy src="me()" trait="_height" />
+			<add src="sibling(Entry)" trait="_total_height" />
+		</_total_height>
+		<_selected>
+			<copy src="me()" trait="_index" />
+			<eq src="ModernHelpMenu" trait="_selection_left_input" />
+			<and>
+				<copy src="ModernHelpMenu" trait="_selection_left_child_input" />
+				<eq> -1 </eq>
+			</and>
+		</_selected>
+
+		<id> 703 </id>
+		<visible> 1 </visible>
+		<locus> 1 </locus>
+		<alpha> 0 </alpha>
+		<clips> 1 </clips>
+		<target> 1 </target>
+		<x> 10 </x>
+		<y>
+			<copy src="sibling(Entry)" trait="y" />
+			<add src="sibling(Entry)" trait="_height" />
+			<max> 0 </max>
+		</y>
+		<width>
+			<copy src="child(Title)" trait="x" />
+			<add src="child(Title)" trait="width" />
+		</width>
+		<height> 36 </height>
+		<mouseoversound> UIMenuFocus </mouseoversound>
+		<clicksound> UIMenuOK </clicksound>
+
+		<image name="Arrow">
+			<visible> 1 </visible>
+			<alpha> 255 </alpha>
+			<depth> 0 </depth>
+			<x> 0 </x>
+			<y>
+				<copy src="parent()" trait="height" />
+				<sub src="me()" trait="height" />
+				<div> 2 </div>
+			</y>
+			<rotateaxisx>
+				<copy src="me()" trait="width" />
+				<div> 2 </div>
+			</rotateaxisx>
+			<rotateaxisy>
+				<copy src="me()" trait="height" />
+				<div> 2 </div>
+			</rotateaxisy>
+			<rotateangle>
+				<copy> 6.2831 </copy>
+				<mul> 0.75 </mul>
+				<onlyif src="parent()" trait="_expanded" />
+			</rotateangle>
+			<width> 20 </width>
+			<height> 20 </height>
+			<zoom> &scale; </zoom>
+			<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+			<brightness> 255 </brightness>
+			<filename> Interface\Stentorious\ModernHelpMenu\Arrow.dds </filename>
+		</image>
+
+		<text name="Title">
+			<visible> 1 </visible>
+			<x>
+				<copy src="sibling(Arrow)" trait="width" />
+				<add> 5 </add>
+			</x>
+			<y> 11 </y>
+			<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+			<brightness>
+				<copy> 200 </copy>
+				<add>
+					<copy> 200 </copy>
+					<onlyif>
+						<copy src="parent()" trait="mouseover" />
+						<or src="parent()" trait="_selected" />
+					</onlyif>
+				</add>
+			</brightness>
+			<font> <copy src="io()" trait="_HelpMenu+Font" /> </font>
+			<zoom> 100 </zoom>
+			<!-- <wrapwidth> <copy src="ModernHelpMenu" trait="_wrapwidthdate" /> </wrapwidth> -->
+			<!-- <wraplines> 0 </wraplines> -->
+			<justify> &left; </justify>
+			<string> <copy src="parent()" trait="_string" /> </string>
+		</text>
+
+	</hotrect>
+</template>
+
+
+<!-- Left window entry template -->
+<template name="HelpMenuEntryTemplate">
+	<text name="HelpMenuEntryTemplate">
+		<_index> 0 </_index>
+		<_help> 0 </_help>
+		<_height> 36 </_height>
+		<_string> Entry Name </_string>
+		<_selected>
+			<copy src="me()" trait="_index" />
+			<eq src="ModernHelpMenu" trait="_selection_left_child_input" />
+			<and>
+				<copy src="grandparent()" trait="_index" />
+				<eq src="ModernHelpMenu" trait="_selection_left_input" />
+			</and>
+		</_selected>
+
+		<id> 704 </id>
+		<visible> 1 </visible>
+		<target> 1 </target>
+		<x> 20 </x>
+		<y>
+			<copy src="sibling(Entry)" trait="y" />
+			<add src="sibling(Entry)" trait="_height" />
+			<max> 0 </max>
+		</y>
+		<clips> 1 </clips>
+		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+		<brightness>
+			<copy> 150 </copy>
+			<add>
+				<copy> 150 </copy>
+				<onlyif>
+					<copy src="me()" trait="mouseover" />
+					<or src="me()" trait="_selected" />
+				</onlyif>
+			</add>
+		</brightness>
+		<font> <copy src="io()" trait="_HelpMenu+Font" /> </font>
+		<zoom> 100 </zoom>
+		<!-- <wrapwidth> <copy src="ModernHelpMenu" trait="_wrapwidthname" /> </wrapwidth> -->
+		<!-- <wraplines> 1 </wraplines> -->
+		<justify> &left; </justify>
+		<string> <copy src="me()" trait="_string" /> </string>
+		<mouseoversound> UIMenuFocus </mouseoversound>
+		<clicksound> UIMenuOK </clicksound>
+	</text>
+</template>
+
+<!-- Right window description template -->
+<template name="HelpMenuDescriptionTemplate">
+	<hotrect name="HelpMenuDescriptionTemplate">
+
+		<_height>
+			<copy src="child(Description)" trait="height" />
+			<add> 5 </add>
+		</_height>
+		<_total_height>
+			<copy src="me()" trait="_height" />
+			<add src="sibling(Entry)" trait="_total_height" />
+		</_total_height>
+		<_description> Help Description </_description>
+
+		<visible> 1 </visible>
+		<locus> 1 </locus>
+		<x> 0 </x>
+		<y>
+			<copy src="sibling(Entry)" trait="y" />
+			<add src="sibling(Entry)" trait="_height" />
+			<max> 0 </max>
+		</y>
+		<clips> 1 </clips>
+
+		<text name="Description">
+			<visible> 1 </visible>
+			<x> 0 </x>
+			<y> 0 </y>
+			<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
+			<brightness> 200 </brightness>
+			<font> <copy src="io()" trait="_HelpMenu+Font" /> </font>
+			<zoom> 100 </zoom>
+			<wrapwidth> <copy src="ModernHelpMenu" trait="_wrapwidth" /> </wrapwidth>
+			<justify> &left; </justify>
+			<string> <copy src="parent()" trait="_description" /> </string>
+		</text>
+
+	</hotrect>
+</template>

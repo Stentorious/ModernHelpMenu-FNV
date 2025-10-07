@@ -1,0 +1,153 @@
+int	iButtonID
+
+int iSizeParent
+int iSelectionParent
+int iSelectionChild
+float fScrollOffset
+string_var sTilePath
+
+begin Function {iButtonID}
+
+	; Ignore inputs
+	if eval GetUIFloatAlt "StartMenu\_HelpMenu+Visible" != 1 || MenuMode 3
+		return
+	endif
+
+	; B Button (Exit menu)
+	if eval iButtonID == 8192
+		SetUIFloatAlt "StartMenu\_HelpMenu+Visible" 0
+		SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\main_container\_enabled" 1
+		SetUIFloatAlt "StartMenu\MCM\MCM_Trigger\target" 1
+		SetUIFloatAlt "StartMenu\B42NPause\B42NIcon\target" 1
+		CallAfter 0.2 ({} => EnableButton 8192) 1
+		PlaySound UIMenuCancel 1
+		return
+	endif
+
+	iSelectionParent = GetUIFloatAlt "StartMenu\ModernHelpMenu\_selection_left"
+	iSelectionChild = GetUIFloatAlt "StartMenu\ModernHelpMenu\_selection_left_child"
+	iSizeParent = (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\ListBox\childcount") - 1
+
+	; A Button (Select list entry)
+	if eval iButtonID == 4096
+		if eval iSelectionChild > -1
+			sTilePath = ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent + "\Entries\Entry:" + $iSelectionChild)
+		else
+			sTilePath = ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent)
+		endif
+		Goo1.AuxVarSetStr "*ModernHelpMenuButton" (sTilePath)
+		ClickMenuButton (sTilePath)
+		sv_Destruct sTilePath
+		PlaySound UIMenuOk 1
+		return
+	endif
+
+	; DPad Up (Move selection up)
+	if eval iButtonID == 1
+		PlaySound UIMenuFocus 1
+
+		; Queue input
+		if eval Goo1.AuxVarType "*HelpMenu_QBut" == 0
+			AuxTimerStart "*HelpMenu_QBut" 0.5 13
+		else
+			AuxTimerStart "*HelpMenu_QBut" 0.075 13
+		endif
+		Goo1.AuxVarSetFlt "*HelpMenu_QBut" 1
+
+		; Current selection (Child)
+		if eval iSelectionChild > -1
+			if eval iSelectionChild == (GetUIFloatAlt ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent + "\Entries\childcount") - 1)
+				iSelectionChild = -1 ; Select parent
+			else
+				iSelectionChild += 1 ; Select next child
+			endif
+
+		; Current selection (Parent)
+		else
+			if eval iSelectionParent == iSizeParent	; Rollover
+				iSelectionParent = 0
+				if eval GetUIFloatAlt ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:0\_expanded") == 1
+					iSelectionChild = 0
+				endif
+			else
+				iSelectionParent += 1
+				if eval GetUIFloatAlt ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent + "\_expanded") == 1
+					iSelectionChild = 0
+				endif
+			endif
+		endif
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\_selection_left" iSelectionParent
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\_selection_left_child" iSelectionChild
+
+		; Adjust scrollbar
+		fScrollOffset = (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\ListBox\y") + (GetUIFloatAlt ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent + "\y")) + 26
+		if eval iSelectionChild > -1
+			fScrollOffset += (GetUIFloatAlt ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent + "\Entries\Entry:" + $iSelectionChild + "\y")) + 36
+		endif
+		if eval fScrollOffset < 0																; Scroll up
+			ClickMenuTile "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\scrollbar_vert_up"
+		elseif fScrollOffset > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\height"		; Scroll to bottom
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\_scroll_to_end" 1
+			ClickMenuTile "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\scrollbar_vert_page_down"
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\_scroll_to_end" 0
+		endif
+
+	endif
+
+	; DPad Down (Move selection down)
+	if eval iButtonID == 2
+		PlaySound UIMenuFocus 1
+
+		; Queue input
+		if eval Goo1.AuxVarType "*HelpMenu_QBut" == 0
+			AuxTimerStart "*HelpMenu_QBut" 0.5 13
+		else
+			AuxTimerStart "*HelpMenu_QBut" 0.075 13
+		endif
+		Goo1.AuxVarSetFlt "*HelpMenu_QBut" 2
+
+		; Current selection (Child)
+		if eval iSelectionChild > -1
+			if eval iSelectionParent == 0 && iSelectionChild == 0 ; Rollover
+				iSelectionParent = iSizeParent
+				iSelectionChild = -1
+			else
+				if eval iSelectionChild == 0
+					iSelectionParent -= 1		; Select next parent
+					iSelectionChild = -1
+				else
+					iSelectionChild -= 1		; Select next child
+				endif
+			endif
+
+		; Current selection (Parent)
+		else
+			if eval GetUIFloatAlt ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent + "\_expanded") == 1
+				iSelectionChild = (GetUIFloatAlt ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent + "\Entries\childcount")) - 1
+			else
+				if eval iSelectionParent == 0
+					iSelectionParent = iSizeParent
+				else
+					iSelectionParent -= 1
+				endif
+			endif
+		endif
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\_selection_left" iSelectionParent
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\_selection_left_child" iSelectionChild
+
+		; Adjust scrollbar
+		fScrollOffset = (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\ListBox\y") + (GetUIFloatAlt ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent + "\y")) + 26
+		if eval iSelectionChild > -1
+			fScrollOffset += (GetUIFloatAlt ("StartMenu\ModernHelpMenu\WindowEntry\ListBox\Entry:" + $iSelectionParent + "\Entries\Entry:" + $iSelectionChild + "\y")) + 36
+		endif
+		if eval fScrollOffset > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\height"		; Scroll down
+			ClickMenuTile "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\scrollbar_vert_down"
+		elseif fScrollOffset < 0																; Scroll to top
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\_scroll_to_end" 1
+			ClickMenuTile "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\scrollbar_vert_page_up"
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\_scroll_to_end" 0
+		endif
+
+	endif
+
+end

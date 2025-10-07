@@ -1,0 +1,51 @@
+string_var sTileName
+
+int iHelpIndex
+int iType
+ref rClone
+string_var sAuxVar
+
+begin Function {sTileName}
+
+	; Reset page
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\visible" 1
+	UnloadUIComponent "StartMenu\ModernHelpMenu\WindowDescription\ListBox"
+	AddTileFromTemplate "StartMenu\ModernHelpMenu\WindowDescription|HelpMenuDescTemplate|ListBox"
+
+	; Get help entry
+	iHelpIndex = GetUIFloatAlt ((sTileName) + "\_help")
+
+	; Get entry type
+	if eval GetController && TrudyRef.AuxVarGetFlt "*HelpMenuXbox_Type" iHelpIndex != -1
+		iType = TrudyRef.AuxVarGetFlt "*HelpMenuXBox_Type" iHelpIndex
+		sAuxVar = "*HelpMenuXbox_Entry"
+	else
+		iType = TrudyRef.AuxVarGetFlt "*HelpMenu_Type" iHelpIndex
+		sAuxVar = "*HelpMenu_Entry"
+	endif
+
+	; Set name
+	SetUIStringAlt "StartMenu\ModernHelpMenu\EntryTitle\string" "%z" (sv_ToUpper (GetUIString ((sTileName) + "\_string")))
+
+	; Set description
+	if eval iType == 0
+		AddTileFromTemplate "StartMenu\ModernHelpMenu\WindowDescription\ListBox|HelpMenuDescriptionTemplate|Entry"
+		SetUIStringAlt "StartMenu\ModernHelpMenu\WindowDescription\ListBox\Entry:0\_description" "%z" (GetFormDescription (TrudyRef.AuxVarGetRef (sAuxVar) iHelpIndex))
+	elseif eval iType == 1
+		AddTileFromTemplate "StartMenu\ModernHelpMenu\WindowDescription\ListBox|HelpMenuDescriptionTemplate|Entry"
+		SetUIStringAlt "StartMenu\ModernHelpMenu\WindowDescription\ListBox\Entry:0\_description" (TrudyRef.AuxVarGetStr (sAuxVar) iHelpIndex)
+	elseif eval iType == 2
+		InjectUIXML "StartMenu\ModernHelpMenu\WindowDescription\ListBox" (TrudyRef.AuxVarGetStr (sAuxVar) iHelpIndex)
+	endif
+
+	; Update list height
+	CallAfterFrames 2 ({} => SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\_list_height" (GetMaxOf 0 (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\ListBox\Entry:0\_total_height"))) 1
+
+	; Move scrollbar to top
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\Scrollbar\_scroll_to_end" 1
+	ClickMenuTile "StartMenu\ModernHelpMenu\WindowDescription\Scrollbar\scrollbar_vert_page_up"
+	SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\Scrollbar\_scroll_to_end" 0
+
+	sv_Destruct sTileName sAuxVar
+
+end

@@ -2,7 +2,7 @@
 <_HelpMenu+Visible> 0 </_HelpMenu+Visible>
 <_HelpMenu+Search> 0 </_HelpMenu+Search>
 <_HelpMenu+Pulse> 0 </_HelpMenu+Pulse>
-<_HelpMenu+TEMP> 0 </_HelpMenu+TEMP>
+<_HelpMenu+Paste> 0 </_HelpMenu+Paste>
 
 <_HelpMenu+Darn> <copy src="sibling(HUDMainMenu)" trait="_HelpMenu+Darn" /> </_HelpMenu+Darn>
 <_HelpMenu+Font> <copy src="sibling(HUDMainMenu)" trait="_HelpMenu+Font" /> </_HelpMenu+Font>

@@ -2,6 +2,14 @@ int iMenuID
 
 Begin Function {iMenuID}
 
+	; Init menu loop
+	SGMLC (CompileScript "ModernHelpMenu\MenuLoop.gek") 1 1 10
+
+	; MAPMO support
+	if eval GetUIFloatAlt "StartMenu\MAPMO\visible" == -999
+		return
+	endif
+
 	if eval GetVariable "FontStartMenu" (EditorIDToFormID "MAPMOMainQUEST")
 		SetUIStringAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\string" (sv_ToUpper GetUIString "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\string")
 		SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\font" 8

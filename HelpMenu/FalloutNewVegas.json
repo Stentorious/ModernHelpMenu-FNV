@@ -2,14 +2,14 @@
 	"minMHMVersion": 1.0,
 	"categories": {
 		"0": {
-			"listTitle": "General",
-			"entries": {
+			"title": "General",
+			"pages": {
 				"0": { "message": "HelpGlossary", "messageXbox": "HelpGlossaryXbox" }
 			}
 		},
 		"1": {
-			"listTitle": "Gameplay",
-			"entries": {
+			"title": "Gameplay",
+			"pages": {
 				"0": { "message": "HelpGeneral", "messageXbox": "HelpGeneralXbox" },
 				"1": { "message": "HelpStealth" },
 				"2": { "message": "HelpVATS", "messageXbox": "HelpVATSXbox" },
@@ -21,8 +21,8 @@
 			}
 		},
 		"2": {
-			"listTitle": "Character",
-			"entries": {
+			"title": "Character",
+			"pages": {
 				"0": { "message": "HelpPipBoyStats" },
 				"1": { "message": "HelpHealingLimbs", "messageXbox": "HelpHealingLimbsXbox" },
 				"2": { "message": "HelpCrippling" },
@@ -36,8 +36,8 @@
 			}
 		},
 		"3": {
-			"listTitle": "Equipment",
-			"entries": {
+			"title": "Equipment",
+			"pages": {
 				"0": { "message": "HelpWeapons" },
 				"1": { "message": "HelpAmmo", "messageXbox": "HelpAmmoXbox" },
 				"2": { "message": "HelpApparel" },
@@ -47,8 +47,8 @@
 			}
 		},
 		"4": {
-			"listTitle": "Interface",
-			"entries": {
+			"title": "Interface",
+			"pages": {
 				"0": { "message": "HelpHotkeys", "messageXbox": "HelpHotkeysXbox" },
 				"1": { "message": "HelpCompass" },
 				"2": { "message": "HelpPipBoyData" },
@@ -57,8 +57,8 @@
 			}
 		},
 		"5": {
-			"listTitle": "Mini-Games",
-			"entries": {
+			"title": "Mini-Games",
+			"pages": {
 				"0": { "message": "HelpBlackjack" },
 				"1": { "message": "HelpSlots" },
 				"2": { "message": "HelpRoulette" },

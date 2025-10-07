@@ -20,9 +20,6 @@ endif
 
 int iSUPInstalled = (eval GetPluginVersion "SUP NVSE Plugin" >= 600)
 
-; Set unused GameSetting to new line
-SetStringSetting "sGFWLive" (sv_Construct "%r")
-
 ; Get screen dimensions
 Goo1.AuxVarSetFlt "*_ScreenWidth" (GetNumericINISetting "iSize W:Display")
 Goo1.AuxVarSetFlt "*_ScreenHeight" (GetNumericINISetting "iSize H:Display")

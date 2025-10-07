@@ -29,7 +29,7 @@ Modern Help Menu supports multiple custom Help Menu page types via the JSON fram
 - Pastebin: Displays the a string returned from a specified Pastebin.com paste.
 
 ### Getting Started
-Check the Wiki for a comprehensive guide and review the example files in the Miscellaneous download section.
+Check the [Wiki](https://github.com/Stentorious/ModernHelpMenu-FNV/wiki) for a comprehensive guide and review the example files in the Miscellaneous download section.
 
 ## Requirements
 - [xNVSE](https://www.nexusmods.com/newvegas/mods/67883) (6.4.0+)

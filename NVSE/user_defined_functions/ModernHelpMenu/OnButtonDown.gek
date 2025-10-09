@@ -17,8 +17,6 @@ begin Function {iButtonID}
 	if eval iButtonID == 8192
 		SetUIFloatAlt "StartMenu\_HelpMenu+Visible" 0
 		SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\main_container\_enabled" 1
-		SetUIFloatAlt "StartMenu\MCM\MCM_Trigger\target" 1
-		SetUIFloatAlt "StartMenu\B42NPause\B42NIcon\target" 1
 		CallAfter 0.2 ({} => EnableButton 8192) 1
 		PlaySound UIMenuCancel 1
 		return

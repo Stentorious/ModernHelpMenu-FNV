@@ -37,6 +37,7 @@ SetOnMenuCloseEventHandler (begin function {int iMenuID}
 	if eval (iMenuID = GetActiveMenuMode) != 1009 && iMenuID != 1048
 		return
 	endif
+	EnableButton 8192
 	SGMLC (CompileScript "ModernHelpMenu\MenuLoop.gek") 0
 end) 1 1013
 

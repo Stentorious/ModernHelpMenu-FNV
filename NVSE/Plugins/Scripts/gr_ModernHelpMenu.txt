@@ -83,7 +83,6 @@ float ModernHelpMenuVersion = 1.0
 int iIndex = 0
 int iSize
 ref rMessage
-ref rMessageXbox
 array_var aJSON
 array_var aEntry
 array_var aCategory
@@ -264,12 +263,40 @@ if eval (iSize = ar_Size aFiles) > 0
 
 	loop
 
-	if eval iIndex > 0
-		PrintC "Modern Help Menu: Loaded %g help pages." iIndex
-	else
-		PrintC "Modern Help Menu: No help pages found."
+endif
+
+; Load additional menus found in the HelpManual FormList
+aFiles = ar_Filter (ar_Unique (GetListForms HelpManual)) ({array_var aForE1} => GetSourceModIndex (*aForE1) != 0)
+if eval (iSize = ar_Size aFiles) > 0
+
+	if eval (Ar_Find "Miscellaneous" aCategories) == Ar_BadNumericIndex
+		ar_Insert aCategories 0 "Miscellaneous"
 	endif
 
+	while (iSize -= 1) > -1
+
+		if eval IsFormValid (rMessage = aFiles[iSize]) == 0
+			continue
+		endif
+		TrudyRef.AuxVarSetRef "*HelpMenu_Name" rMessage iIndex
+		TrudyRef.AuxVarSetRef "*HelpMenu_Entry" rMessage iIndex
+		TrudyRef.AuxVarSetFlt "*HelpMenu_Type" 0 iIndex
+		SunnyRef.AuxVarSetFlt ("*HelpMenu_Miscellaneous") iIndex -1
+
+		if eval IsFormValid (rMessage = EditorIDToFormID ((GetEditorID rMessage) + "Xbox"))
+			TrudyRef.AuxVarSetRef "*HelpMenuXbox_Entry" rMessage iIndex
+			TrudyRef.AuxVarSetFlt "*HelpMenuXbox_Type" 0 iIndex
+		endif
+
+		iIndex += 1
+
+	loop
+endif
+
+if eval iIndex > 0
+	PrintC "Modern Help Menu: Loaded %g help pages." iIndex
+else
+	PrintC "Modern Help Menu: No help pages found."
 endif
 
 TrudyRef.AuxVarSetFromArr "*HelpMenu_Categories" aCategories

@@ -155,6 +155,8 @@ if eval (iSize = ar_Size aFiles) > 0
 					if eval ar_HasKey aEntry "message"
 						if eval IsFormValid (rMessage = EditorIDToFormID (aEntry["message"])) == 0
 							continue
+						elseif eval GetType rMessage != 98
+							continue
 						endif
 						TrudyRef.AuxVarSetRef "*HelpMenu_Name" rMessage iIndex
 						TrudyRef.AuxVarSetRef "*HelpMenu_Entry" rMessage iIndex
@@ -220,7 +222,7 @@ if eval (iSize = ar_Size aFiles) > 0
 					endif
 
 					; Message form
-					if eval ar_HasKey aEntry "messageXbox" && IsFormValid (rMessage = EditorIDToFormID (aEntry["messageXbox"]))
+					if eval ar_HasKey aEntry "messageXbox" && IsFormValid (rMessage = EditorIDToFormID (aEntry["messageXbox"])) && GetType rMessage == 98
 						TrudyRef.AuxVarSetRef "*HelpMenuXbox_Entry" rMessage iIndex
 						TrudyRef.AuxVarSetFlt "*HelpMenuXbox_Type" 0 iIndex
 
@@ -277,13 +279,15 @@ if eval (iSize = ar_Size aFiles) > 0
 
 		if eval IsFormValid (rMessage = aFiles[iSize]) == 0
 			continue
+		elseif eval GetType rMessage != 98
+			continue
 		endif
 		TrudyRef.AuxVarSetRef "*HelpMenu_Name" rMessage iIndex
 		TrudyRef.AuxVarSetRef "*HelpMenu_Entry" rMessage iIndex
 		TrudyRef.AuxVarSetFlt "*HelpMenu_Type" 0 iIndex
 		SunnyRef.AuxVarSetFlt ("*HelpMenu_Miscellaneous") iIndex -1
 
-		if eval IsFormValid (rMessage = EditorIDToFormID ((GetEditorID rMessage) + "Xbox"))
+		if eval IsFormValid (rMessage = EditorIDToFormID ((GetEditorID rMessage) + "Xbox")) && GetType rMessage == 98
 			TrudyRef.AuxVarSetRef "*HelpMenuXbox_Entry" rMessage iIndex
 			TrudyRef.AuxVarSetFlt "*HelpMenuXbox_Type" 0 iIndex
 		endif

@@ -86,7 +86,6 @@ ref rMessage
 array_var aJSON
 array_var aEntry
 array_var aCategory
-array_var aEntry
 array_var aForE1
 array_var aForE2
 string_var sJSONPath

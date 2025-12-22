@@ -1,22 +1,22 @@
 ﻿<hotrect name="ModernHelpMenuBack">
-	<include src="text_box.xml"/>
+	<include src="text_box.xml" />
 	<id> 708 </id>
-	<visible> <copy src="io()" trait="_HelpMenu+Visible"/> </visible>
+	<visible> <copy src="io()" trait="_HelpMenu+Visible" /> </visible>
 	<alpha>
 		<copy> 40 </copy>
-		<onlyif src="me" trait="_box_visible"/>
+		<onlyif src="me" trait="_box_visible" />
 	</alpha>
-	<x> <copy src="sibling(main_back_button)" trait="x"/> </x>
-	<y> <copy src="sibling(main_back_button)" trait="y"/> </y>
-	<depth> <copy src="sibling(main_back_button)" trait="depth"/> </depth>
-	<width> <copy src="sibling(main_back_button)" trait="width"/> </width>
-	<height> <copy src="sibling(main_back_button)" trait="height"/> </height>
+	<x> <copy src="sibling(main_back_button)" trait="x" /> </x>
+	<y> <copy src="sibling(main_back_button)" trait="y" /> </y>
+	<depth> <copy src="sibling(main_back_button)" trait="depth" /> </depth>
+	<width> <copy src="sibling(main_back_button)" trait="width" /> </width>
+	<height> <copy src="sibling(main_back_button)" trait="height" /> </height>
 	<string> &-sBack; </string>
 	<justify> &right; </justify>
 	<brightness> 255 </brightness>
-	<font> <copy src="sibling(main_back_button)" trait="font"/> </font>
-	<_xbox_button> <copy src="sibling(main_back_button)" trait="_xbox_button"/> </_xbox_button>
-	<_fixedwidth> <copy src="sibling(main_back_button)" trait="_fixedwidth"/> </_fixedwidth>
-	<_horbuf> <copy src="sibling(main_back_button)" trait="_horbuf"/> </_horbuf>
-	<_verbuf> <copy src="sibling(main_back_button)" trait="_verbuf"/> </_verbuf>
+	<font> <copy src="sibling(main_back_button)" trait="font" /> </font>
+	<_xbox_button> <copy src="sibling(main_back_button)" trait="_xbox_button" /> </_xbox_button>
+	<_fixedwidth> <copy src="sibling(main_back_button)" trait="_fixedwidth" /> </_fixedwidth>
+	<_horbuf> <copy src="sibling(main_back_button)" trait="_horbuf" /> </_horbuf>
+	<_verbuf> <copy src="sibling(main_back_button)" trait="_verbuf" /> </_verbuf>
 </hotrect>

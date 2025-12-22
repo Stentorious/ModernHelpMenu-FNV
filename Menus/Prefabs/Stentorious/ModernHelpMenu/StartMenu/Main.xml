@@ -11,10 +11,10 @@
 		<onlyif src="globals()" trait="_duiHUDOffset" />
 	</add>
 </_HelpMenu+Font>
-<_HelpMenu+Systemcolor> <copy src="child(NOGLOW_BRANCH)" trait="systemcolor"/> </_HelpMenu+Systemcolor>
+<_HelpMenu+Systemcolor> <copy src="child(NOGLOW_BRANCH)" trait="systemcolor" /> </_HelpMenu+Systemcolor>
 
 <!-- Game -->
-<_controller> <copy src="globals()" trait="_Has360Controller"/> </_controller>
+<_controller> <copy src="globals()" trait="_Has360Controller" /> </_controller>
 <_screen_width> <copy src="screen()" trait="width" /> </_screen_width>
 <_screen_height> <copy src="screen()" trait="height" /> </_screen_height>
 
@@ -57,10 +57,10 @@
 	<_scrolldelta_controller> 3 </_scrolldelta_controller>
 	<_scrolldelta>
 		<copy> 36 </copy>
-		<onlyifnot src="globals()" trait="_Has360Controller"/>
+		<onlyifnot src="globals()" trait="_Has360Controller" />
 		<add>
-			<copy src="me()" trait="_scrolldelta_controller"/>
-			<onlyif src="globals()" trait="_Has360Controller"/>
+			<copy src="me()" trait="_scrolldelta_controller" />
+			<onlyif src="globals()" trait="_Has360Controller" />
 		</add>
 		<max> 0.1 </max>
 	</_scrolldelta>
@@ -70,15 +70,15 @@
 	<_selection_left> -1 </_selection_left>
 	<_selection_left_child> -1 </_selection_left_child>
 	<_selection_left_input>
-		<copy src="me()" trait="_selection_left"/>
+		<copy src="me()" trait="_selection_left" />
 		<add> 1 </add>
-		<onlyif src="io()" trait="_controller"/>
+		<onlyif src="io()" trait="_controller" />
 		<sub> 1 </sub>
 	</_selection_left_input>
 	<_selection_left_child_input>
-		<copy src="me()" trait="_selection_left_child"/>
+		<copy src="me()" trait="_selection_left_child" />
 		<add> 1 </add>
-		<onlyif src="io()" trait="_controller"/>
+		<onlyif src="io()" trait="_controller" />
 		<sub> 1 </sub>
 	</_selection_left_child_input>
 
@@ -132,12 +132,12 @@
 		<locus> 1 </locus>
 		<x>
 			<copy src="sibling(Outline_VTL)" trait="x" />
-			<add src="globals()" trait="_line_thickness"/>
+			<add src="globals()" trait="_line_thickness" />
 			<add> 10 </add>
 		</x>
 		<y>
 			<copy src="sibling(Outline_VTL)" trait="y" />
-			<add src="globals()" trait="_line_thickness"/>
+			<add src="globals()" trait="_line_thickness" />
 			<add> 10 </add>
 		</y>
 		<depth> 10 </depth>
@@ -145,7 +145,7 @@
 			<copy src="sibling(Outline_VTM)" trait="x" />
 			<sub src="sibling(Outline_VTL)" trait="x" />
 			<sub> 20 </sub>
-			<sub src="globals()" trait="_line_thickness"/>
+			<sub src="globals()" trait="_line_thickness" />
 		</_width>
 		<_height> 36 </_height>
 
@@ -181,20 +181,20 @@
 			<image name="Window">
 				<visible> 1 </visible>
 				<x>
-					<copy src="globals()" trait="_line_thickness"/>
+					<copy src="globals()" trait="_line_thickness" />
 					<sub> 4 </sub>
 				</x>
-				<y> <copy src="globals()" trait="_line_thickness"/> </y>
+				<y> <copy src="globals()" trait="_line_thickness" /> </y>
 				<depth> 1 </depth>
 				<width>
 					<copy src="sibling(Background)" trait="width" />
-					<sub src="globals()" trait="_line_thickness"/>
-					<sub src="globals()" trait="_line_thickness"/>
+					<sub src="globals()" trait="_line_thickness" />
+					<sub src="globals()" trait="_line_thickness" />
 				</width>
 				<height>
 					<copy src="sibling(Background)" trait="height" />
-					<sub src="globals()" trait="_line_thickness"/>
-					<sub src="globals()" trait="_line_thickness"/>
+					<sub src="globals()" trait="_line_thickness" />
+					<sub src="globals()" trait="_line_thickness" />
 				</height>
 				<systemcolor> 0 </systemcolor>
 				<red> 0 </red>
@@ -215,7 +215,7 @@
 				</x>
 				<y>
 					<copy> -2.5 </copy>
-					<onlyif src="globals()" trait="_duiHUDOffset"/>
+					<onlyif src="globals()" trait="_duiHUDOffset" />
 					<add> 10 </add>
 				</y>
 				<depth> 2 </depth>
@@ -296,7 +296,7 @@
 			<div> 4 </div>
 		</x>
 		<y> 0 </y>
-		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<width> <copy src="globals()" trait="_line_thickness" /> </width>
 		<height> <copy src="parent()" trait="_height_fade" /> </height>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
 		<filename> fade_to_bottom.dds </filename>
@@ -308,7 +308,7 @@
 			<copy src="parent()" trait="_height" />
 			<sub src="me()" trait="height" />
 		</y>
-		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<width> <copy src="globals()" trait="_line_thickness" /> </width>
 		<height> <copy src="parent()" trait="_height_fade" /> </height>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
 		<filename> fade_to_top.dds </filename>
@@ -317,10 +317,10 @@
 	<image name="Outline_VTL">
 		<x>
 			<copy> 0 </copy>
-			<sub src="globals()" trait="_line_thickness"/>
+			<sub src="globals()" trait="_line_thickness" />
 		</x>
 		<y> 0 </y>
-		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<width> <copy src="globals()" trait="_line_thickness" /> </width>
 		<height> <copy src="parent()" trait="_height_fade" /> </height>
 		<zoom> -1 </zoom>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
@@ -330,7 +330,7 @@
 	<image name="Outline_VTR">
 		<x> <copy src="parent()" trait="_width" /> </x>
 		<y> <copy src="sibling(Outline_VTL)" trait="y" /> </y>
-		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<width> <copy src="globals()" trait="_line_thickness" /> </width>
 		<height> <copy src="parent()" trait="_height_fade" /> </height>
 		<zoom> -1 </zoom>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
@@ -343,7 +343,7 @@
 			<copy src="parent()" trait="_height" />
 			<sub src="me()" trait="height" />
 		</y>
-		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<width> <copy src="globals()" trait="_line_thickness" /> </width>
 		<height> <copy src="parent()" trait="_height_fade" /> </height>
 		<zoom> -1 </zoom>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
@@ -353,7 +353,7 @@
 	<image name="Outline_VBR">
 		<x> <copy src="sibling(Outline_VTR)" trait="x" /> </x>
 		<y> <copy src="sibling(Outline_VBL)" trait="y" /> </y>
-		<width> <copy src="globals()" trait="_line_thickness"/> </width>
+		<width> <copy src="globals()" trait="_line_thickness" /> </width>
 		<height> <copy src="parent()" trait="_height_fade" /> </height>
 		<zoom> -1 </zoom>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
@@ -364,14 +364,14 @@
 		<x> <copy src="sibling(Outline_VTL)" trait="x" /> </x>
 		<y>
 			<copy src="sibling(Outline_VTL)" trait="y" />
-			<sub src="globals()" trait="_line_thickness"/>
+			<sub src="globals()" trait="_line_thickness" />
 		</y>
 		<width>
 			<copy src="parent()" trait="_width" />
-			<add src="globals()" trait="_line_thickness"/>
-			<add src="globals()" trait="_line_thickness"/>
+			<add src="globals()" trait="_line_thickness" />
+			<add src="globals()" trait="_line_thickness" />
 		</width>
-		<height> <copy src="globals()" trait="_line_thickness"/> </height>
+		<height> <copy src="globals()" trait="_line_thickness" /> </height>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
 		<filename> Interface\Shared\solid.dds </filename>
 	</image>
@@ -379,7 +379,7 @@
 		<x> <copy src="sibling(Outline_VTL)" trait="x" /> </x>
 		<y> <copy src="parent()" trait="_height" /> </y>
 		<width> <copy src="parent()" trait="_height_fade" /> </width>
-		<height> <copy src="globals()" trait="_line_thickness"/> </height>
+		<height> <copy src="globals()" trait="_line_thickness" /> </height>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
 		<filename> Interface\Shared\solid.dds </filename>
 	</image>
@@ -395,24 +395,24 @@
 			<sub src="sibling(TitleText)" trait="x" />
 			<sub src="sibling(TitleText)" trait="width" />
 			<sub> 10 </sub>
-			<sub src="globals()" trait="_line_thickness"/>
+			<sub src="globals()" trait="_line_thickness" />
 		</width>
-		<height> <copy src="globals()" trait="_line_thickness"/> </height>
+		<height> <copy src="globals()" trait="_line_thickness" /> </height>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
 		<filename> Interface\Shared\solid.dds </filename>
 	</image>
 	<image name="TitleIcon">
 		<x>
 			<copy src="sibling(Outline_HBL)" trait="x" />
-			<add src="sibling(Outline_HBL)" trait="width"/>
+			<add src="sibling(Outline_HBL)" trait="width" />
 			<sub> 24 </sub>
 		</x>
 		<y>
-			<copy src="sibling(Outline_HBL)" trait="height"/>
-			<sub src="me" trait="height"/>
+			<copy src="sibling(Outline_HBL)" trait="height" />
+			<sub src="me" trait="height" />
 			<div> 2 </div>
 			<add> 1 </add>
-			<add src="sibling(Outline_HBL)" trait="y"/>
+			<add src="sibling(Outline_HBL)" trait="y" />
 		</y>
 		<width> 128 </width>
 		<height> 64 </height>
@@ -421,24 +421,24 @@
 	</image>
 	<text name="TitleText">
 		<x>
-			<copy src="sibling(TitleIcon)" trait="x"/>
-			<add src="sibling(TitleIcon)" trait="width"/>
+			<copy src="sibling(TitleIcon)" trait="x" />
+			<add src="sibling(TitleIcon)" trait="width" />
 			<sub> 24 </sub>
 		</x>
 		<y>
 			<copy> -7 </copy>
-			<onlyif src="globals()" trait="_duiHUDOffset"/>
-			<add src="sibling(TitleIcon)" trait="y"/>
+			<onlyif src="globals()" trait="_duiHUDOffset" />
+			<add src="sibling(TitleIcon)" trait="y" />
 			<add> 7 </add>
 			<add>
-				<copy src="sibling(TitleIcon)" trait="height"/>
-				<sub src="me()" trait="height"/>
+				<copy src="sibling(TitleIcon)" trait="height" />
+				<sub src="me()" trait="height" />
 				<div> 2 </div>
 
 			</add>
 		</y>
 		<font> 1 </font>
-		<string> <copy src="parent()" trait="_text_title"/></string>
+		<string> <copy src="parent()" trait="_text_title" /></string>
 	</text>
 
 	<image name="Background">
@@ -534,9 +534,9 @@
 		<clipwindow> 1 </clipwindow>
 
 		<hotrect name="Scrollbar">
-			<include src="scrollbar_vert.xml"/>
+			<include src="scrollbar_vert.xml" />
 			<_x>
-				<copy src="parent()" trait="width"/>
+				<copy src="parent()" trait="width" />
 				<sub> 11 </sub>
 			</_x>
 			<y>
@@ -547,15 +547,15 @@
 				<copy src="grandparent()" trait="_height" />
 				<sub> 100 </sub>
 			</_height>
-			<_scrolldelta> <copy src="grandparent" trait="_scrolldelta"/> </_scrolldelta>
+			<_scrolldelta> <copy src="grandparent" trait="_scrolldelta" /> </_scrolldelta>
 			<_number_of_items>
-				<copy src="parent()" trait="_list_height"/>
-				<add src="grandparent()" trait="_list_height_extra"/>
+				<copy src="parent()" trait="_list_height" />
+				<add src="grandparent()" trait="_list_height_extra" />
 				<sub> 20 </sub>
 				<div src="me()" trait="_scrolldelta" />
 			</_number_of_items>
 			<_number_of_visible_items>
-				<copy src="parent" trait="height"/>
+				<copy src="parent" trait="height" />
 				<div src="me()" trait="_scrolldelta" />
 			</_number_of_visible_items>
 		</hotrect>
@@ -569,23 +569,23 @@
 		<visible> 0 </visible>
 		<x> 5 </x>
 		<y>
-			<copy src="sibling(Search)" trait="y"/>
-			<add src="sibling(Search)" trait="_height"/>
+			<copy src="sibling(Search)" trait="y" />
+			<add src="sibling(Search)" trait="_height" />
 			<add> 20 </add>
 		</y>
-		<width> <copy src="sibling(Outline_VTM)" trait="x"/> </width>
+		<width> <copy src="sibling(Outline_VTM)" trait="x" /> </width>
 		<height>
 			<copy src="sibling(Outline_HBL)" trait="y" />
-			<sub src="me()" trait="y"/>
+			<sub src="me()" trait="y" />
 			<sub> 20 </sub>
 		</height>
 		<locus> 1 </locus>
 		<clipwindow> 1 </clipwindow>
 
 		<hotrect name="Scrollbar">
-			<include src="scrollbar_vert.xml"/>
+			<include src="scrollbar_vert.xml" />
 			<_x>
-				<copy src="parent()" trait="width"/>
+				<copy src="parent()" trait="width" />
 				<sub> 20 </sub>
 			</_x>
 			<y>
@@ -598,13 +598,13 @@
 			</_height>
 			<_scrolldelta> 36 </_scrolldelta>
 			<_number_of_items>
-				<copy src="parent()" trait="_list_height"/>
-				<add src="grandparent()" trait="_list_height_extra"/>
+				<copy src="parent()" trait="_list_height" />
+				<add src="grandparent()" trait="_list_height_extra" />
 				<sub> 29 </sub>
 				<div src="me()" trait="_scrolldelta" />
 			</_number_of_items>
 			<_number_of_visible_items>
-				<copy src="parent" trait="height"/>
+				<copy src="parent" trait="height" />
 				<div src="me()" trait="_scrolldelta" />
 			</_number_of_visible_items>
 		</hotrect>
@@ -621,8 +621,8 @@
 		<y>
 			<copy> 5 </copy>
 			<sub>
-				<copy src="sibling(Scrollbar)" trait="_current_value"/>
-				<mul src="sibling(Scrollbar)" trait="_scrolldelta"/>
+				<copy src="sibling(Scrollbar)" trait="_current_value" />
+				<mul src="sibling(Scrollbar)" trait="_scrolldelta" />
 			</sub>
 		</y>
 		<locus> 1 </locus>
@@ -637,8 +637,8 @@
 		<y>
 			<copy> -9 </copy>
 			<sub>
-				<copy src="sibling(Scrollbar)" trait="_current_value"/>
-				<mul src="sibling(Scrollbar)" trait="_scrolldelta"/>
+				<copy src="sibling(Scrollbar)" trait="_current_value" />
+				<mul src="sibling(Scrollbar)" trait="_scrolldelta" />
 			</sub>
 		</y>
 		<locus> 1 </locus>
@@ -653,7 +653,7 @@
 		<x> 5 </x>
 		<y>
 			<copy> -3.5 </copy>
-			<onlyif src="globals()" trait="_duiHUDOffset"/>
+			<onlyif src="globals()" trait="_duiHUDOffset" />
 			<add> 47 </add>
 		</y>
 		<locus> 1 </locus>
@@ -747,7 +747,7 @@
 			</x>
 			<y>
 				<copy> -3.5 </copy>
-				<onlyif src="globals()" trait="_duiHUDOffset"/>
+				<onlyif src="globals()" trait="_duiHUDOffset" />
 				<add> 11 </add>
 			</y>
 			<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>

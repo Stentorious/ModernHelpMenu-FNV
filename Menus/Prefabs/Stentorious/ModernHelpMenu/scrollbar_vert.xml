@@ -1,7 +1,6 @@
 <_scroll_to_end> 0 </_scroll_to_end>
 <_jump_size>
-	<copy> 0 </copy>
-	<add src="me()" trait="_number_of_items"/>
+	<copy src="me()" trait="_number_of_items"/>
 	<onlyif src="me()" trait="_scroll_to_end"/>
 	<add>
 		<copy src="me()" trait="_number_of_visible_items"/>

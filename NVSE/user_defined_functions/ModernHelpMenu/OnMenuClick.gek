@@ -12,7 +12,7 @@ begin Function {iMenuID, iTileID, sTileName}
 					CloseActiveMenu
 				endif
 			end) 1
-			if eval GetUIFloatAlt "StartMenu\_HelpMenu+Init" == 0
+			if eval GetUIFloatAlt "StartMenu\_HelpMenu+Init" == 1
 				Goo1.AuxVarSetStr "*HelpMenuButton" (GetActiveUIComponentFullName)
 				Call (CompileScript "ModernHelpMenu\RefreshMenu.gek")
 			endif

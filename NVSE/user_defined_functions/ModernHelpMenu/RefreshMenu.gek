@@ -4,8 +4,8 @@ array_var aEntry
 begin Function {}
 
 	; On menu init
-	if eval GetUIFloatAlt "StartMenu\_HelpMenu+Init" == 0
-		SetUIFloatAlt "StartMenu\_HelpMenu+Init" 1
+	if eval GetUIFloatAlt "StartMenu\_HelpMenu+Init" < 2
+		SetUIFloatAlt "StartMenu\_HelpMenu+Init" 2
 
 		; Enable smooth scrolling
 		SetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\_VUI+SmoothScrolling" 0

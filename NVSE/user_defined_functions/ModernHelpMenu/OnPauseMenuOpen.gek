@@ -2,6 +2,11 @@ int iMenuID
 
 Begin Function {iMenuID}
 
+	if eval GetUIFloatAlt "StartMenu\_HelpMenu+Init"
+		return
+	endif
+	SetUIFloatAlt "StartMenu\_HelpMenu+Init" 1
+
 	; Init menu loop
 	SGMLC (CompileScript "ModernHelpMenu\MenuLoop.gek") 1 1 10
 

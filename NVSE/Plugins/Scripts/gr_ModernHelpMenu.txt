@@ -34,7 +34,7 @@ SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "S
 SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu#708"
 SetOnMenuOpenEventHandler (CompileScript "ModernHelpMenu\OnPauseMenuOpen.gek") 1 1013
 SetOnMenuCloseEventHandler (begin function {int iMenuID}
-	if eval (iMenuID = GetActiveMenuMode) != 1009 && iMenuID != 1048
+	if eval GetUIFloatAlt "StartMenu\visible" != -999
 		return
 	endif
 	EnableButton 8192

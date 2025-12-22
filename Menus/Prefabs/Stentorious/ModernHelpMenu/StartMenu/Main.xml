@@ -3,9 +3,14 @@
 <_HelpMenu+Search> 0 </_HelpMenu+Search>
 <_HelpMenu+Pulse> 0 </_HelpMenu+Pulse>
 <_HelpMenu+Paste> 0 </_HelpMenu+Paste>
-
-<_HelpMenu+Darn> <copy src="sibling(HUDMainMenu)" trait="_HelpMenu+Darn" /> </_HelpMenu+Darn>
-<_HelpMenu+Font> <copy src="sibling(HUDMainMenu)" trait="_HelpMenu+Font" /> </_HelpMenu+Font>
+<_HelpMenu+Font>
+	<copy> 3 </copy>
+	<onlyifnot src="globals()" trait="_duiHUDOffset" />
+	<add>
+		<copy> 6 </copy>
+		<onlyif src="globals()" trait="_duiHUDOffset" />
+	</add>
+</_HelpMenu+Font>
 <_HelpMenu+Systemcolor> <copy src="child(NOGLOW_BRANCH)" trait="systemcolor"/> </_HelpMenu+Systemcolor>
 
 <!-- Game -->
@@ -51,11 +56,8 @@
 	<!-- Scroll bar -->
 	<_scrolldelta_controller> 3 </_scrolldelta_controller>
 	<_scrolldelta>
-		<copy> 0 </copy>
-		<add>
-			<copy> 36 </copy>
-			<onlyifnot src="globals()" trait="_Has360Controller"/>
-		</add>
+		<copy> 36 </copy>
+		<onlyifnot src="globals()" trait="_Has360Controller"/>
 		<add>
 			<copy src="me()" trait="_scrolldelta_controller"/>
 			<onlyif src="globals()" trait="_Has360Controller"/>
@@ -68,20 +70,16 @@
 	<_selection_left> -1 </_selection_left>
 	<_selection_left_child> -1 </_selection_left_child>
 	<_selection_left_input>
-		<copy> -1 </copy>
-		<add>
-			<copy src="me()" trait="_selection_left"/>
-			<add> 1 </add>
-			<onlyif src="io()" trait="_controller"/>
-		</add>
+		<copy src="me()" trait="_selection_left"/>
+		<add> 1 </add>
+		<onlyif src="io()" trait="_controller"/>
+		<sub> 1 </sub>
 	</_selection_left_input>
 	<_selection_left_child_input>
-		<copy> -1 </copy>
-		<add>
-			<copy src="me()" trait="_selection_left_child"/>
-			<add> 1 </add>
-			<onlyif src="io()" trait="_controller"/>
-		</add>
+		<copy src="me()" trait="_selection_left_child"/>
+		<add> 1 </add>
+		<onlyif src="io()" trait="_controller"/>
+		<sub> 1 </sub>
 	</_selection_left_child_input>
 
 	<!-- Vanilla traits -->
@@ -209,23 +207,22 @@
 			<text name="Text">
 				<visible> <not src="sibling(TextCursor)" trait="visible" /> </visible>
 				<x>
-					<copy> 4 </copy>
-					<add>
-						<copy src="sibling(Icon)" trait="x" />
-						<sub src="me()" trait="width" />
-						<sub> 16 </sub>
-						<min> 0 </min>
-					</add>
+					<copy src="sibling(Icon)" trait="x" />
+					<sub src="me()" trait="width" />
+					<sub> 16 </sub>
+					<min> 0 </min>
+					<add> 4 </add>
 				</x>
-				<y> 10 </y>
+				<y>
+					<copy> -2.5 </copy>
+					<onlyif src="globals()" trait="_duiHUDOffset"/>
+					<add> 10 </add>
+				</y>
 				<depth> 2 </depth>
 				<clips> 1 </clips>
 				<systemcolor>
-					<copy> 0 </copy>
-					<add>
-						<copy> 2 </copy>
-						<onlyif src="grandparent()" trait="_search_fail" />
-					</add>
+					<copy> 2 </copy>
+					<onlyif src="grandparent()" trait="_search_fail" />
 					<add>
 						<copy src="io()" trait="_HelpMenu+Systemcolor" />
 						<onlyifnot src="grandparent()" trait="_search_fail" />
@@ -245,7 +242,7 @@
 					<eq> 1 </eq>
 				</visible>
 				<x> <copy src="sibling(Text)" trait="x" /> </x>
-				<y> 10 </y>
+				<y> <copy src="sibling(Text)" trait="y" /> </y>
 				<depth> 2 </depth>
 				<clips> 1 </clips>
 				<systemcolor> <copy src="sibling(Text)" trait="systemcolor" /> </systemcolor>
@@ -380,10 +377,7 @@
 	</image>
 	<image name="Outline_HBL">
 		<x> <copy src="sibling(Outline_VTL)" trait="x" /> </x>
-		<y>
-			<copy> 0 </copy>
-			<add src="parent()" trait="_height" />
-		</y>
+		<y> <copy src="parent()" trait="_height" /> </y>
 		<width> <copy src="parent()" trait="_height_fade" /> </width>
 		<height> <copy src="globals()" trait="_line_thickness"/> </height>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
@@ -414,13 +408,11 @@
 			<sub> 24 </sub>
 		</x>
 		<y>
-			<copy src="sibling(Outline_HBL)" trait="y"/>
-			<add>
-				<copy src="sibling(Outline_HBL)" trait="height"/>
-				<sub src="me" trait="height"/>
-				<div> 2 </div>
-				<add> 1 </add>
-			</add>
+			<copy src="sibling(Outline_HBL)" trait="height"/>
+			<sub src="me" trait="height"/>
+			<div> 2 </div>
+			<add> 1 </add>
+			<add src="sibling(Outline_HBL)" trait="y"/>
 		</y>
 		<width> 128 </width>
 		<height> 64 </height>
@@ -434,17 +426,16 @@
 			<sub> 24 </sub>
 		</x>
 		<y>
-			<copy src="sibling(TitleIcon)" trait="y"/>
+			<copy> -7 </copy>
+			<onlyif src="globals()" trait="_duiHUDOffset"/>
+			<add src="sibling(TitleIcon)" trait="y"/>
+			<add> 7 </add>
 			<add>
 				<copy src="sibling(TitleIcon)" trait="height"/>
 				<sub src="me()" trait="height"/>
 				<div> 2 </div>
-				<add> 7 </add>
+
 			</add>
-			<sub>
-				<copy> 7 </copy>
-				<onlyif src="io()" trait="_HelpMenu+Darn"/>
-			</sub>
 		</y>
 		<font> 1 </font>
 		<string> <copy src="parent()" trait="_text_title"/></string>
@@ -486,11 +477,9 @@
 			<add src="sibling(WindowDescription)" trait="x" />
 		</x>
 		<y>
-			<copy> 35 </copy>
-			<sub>
-				<copy> 12.5 </copy>
-				<onlyif src="io()" trait="_HelpMenu+Darn" />
-			</sub>
+			<copy> -12.5 </copy>
+			<onlyif src="globals()" trait="_duiHUDOffset" />
+			<add> 35 </add>
 		</y>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
 		<font> 7 </font>
@@ -630,12 +619,11 @@
 		<visible> 1 </visible>
 		<alpha> 0 </alpha>
 		<y>
-			<copy> 0 </copy>
+			<copy> 5 </copy>
 			<sub>
 				<copy src="sibling(Scrollbar)" trait="_current_value"/>
 				<mul src="sibling(Scrollbar)" trait="_scrolldelta"/>
 			</sub>
-			<add> 5 </add>
 		</y>
 		<locus> 1 </locus>
 	</rect>
@@ -647,12 +635,11 @@
 		<visible> 1 </visible>
 		<alpha> 0 </alpha>
 		<y>
-			<copy> 0 </copy>
+			<copy> -9 </copy>
 			<sub>
 				<copy src="sibling(Scrollbar)" trait="_current_value"/>
 				<mul src="sibling(Scrollbar)" trait="_scrolldelta"/>
 			</sub>
-			<sub> 9 </sub>
 		</y>
 		<locus> 1 </locus>
 	</rect>
@@ -664,7 +651,11 @@
 		<visible> <copy src="parent()" trait="_expanded" /> </visible>
 		<alpha> 0 </alpha>
 		<x> 5 </x>
-		<y> 47 </y>
+		<y>
+			<copy> -3.5 </copy>
+			<onlyif src="globals()" trait="_duiHUDOffset"/>
+			<add> 47 </add>
+		</y>
 		<locus> 1 </locus>
 	</rect>
 </template>
@@ -737,8 +728,7 @@
 				<div> 2 </div>
 			</rotateaxisy>
 			<rotateangle>
-				<copy> 6.2831 </copy>
-				<mul> 0.75 </mul>
+				<copy> 4.712325 </copy>
 				<onlyif src="parent()" trait="_expanded" />
 			</rotateangle>
 			<width> 20 </width>
@@ -755,17 +745,19 @@
 				<copy src="sibling(Arrow)" trait="width" />
 				<add> 5 </add>
 			</x>
-			<y> 11 </y>
+			<y>
+				<copy> -3.5 </copy>
+				<onlyif src="globals()" trait="_duiHUDOffset"/>
+				<add> 11 </add>
+			</y>
 			<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
 			<brightness>
 				<copy> 200 </copy>
-				<add>
-					<copy> 200 </copy>
-					<onlyif>
-						<copy src="parent()" trait="mouseover" />
-						<or src="parent()" trait="_selected" />
-					</onlyif>
-				</add>
+				<onlyif>
+					<copy src="parent()" trait="mouseover" />
+					<or src="parent()" trait="_selected" />
+				</onlyif>
+				<add> 200 </add>
 			</brightness>
 			<font> <copy src="io()" trait="_HelpMenu+Font" /> </font>
 			<zoom> 100 </zoom>
@@ -807,14 +799,12 @@
 		<clips> 1 </clips>
 		<systemcolor> <copy src="io()" trait="_HelpMenu+Systemcolor" /> </systemcolor>
 		<brightness>
-			<copy> 150 </copy>
-			<add>
-				<copy> 150 </copy>
-				<onlyif>
-					<copy src="me()" trait="mouseover" />
-					<or src="me()" trait="_selected" />
-				</onlyif>
-			</add>
+			<copy> 200 </copy>
+			<onlyif>
+				<copy src="me()" trait="mouseover" />
+				<or src="me()" trait="_selected" />
+			</onlyif>
+			<add> 150 </add>
 		</brightness>
 		<font> <copy src="io()" trait="_HelpMenu+Font" /> </font>
 		<zoom> 100 </zoom>

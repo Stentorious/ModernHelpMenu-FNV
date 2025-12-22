@@ -74,9 +74,6 @@ SetEventHandler "OnButtonUp:3" (begin function {int iKeyCode}
 	Goo1.AuxVarErase "*HelpMenu_QBut"
 end)
 
-; Darnified UI support
-SetUIFloatAlt "HUDMainMenu\_HelpMenu+Darn" (eval IsModloaded "DarNifiedUINV.esp")
-
 ; Modern Help Menu version
 float ModernHelpMenuVersion = 1.0
 

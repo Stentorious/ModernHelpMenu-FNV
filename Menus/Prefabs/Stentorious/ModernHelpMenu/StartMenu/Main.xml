@@ -200,6 +200,7 @@
 				<red> 0 </red>
 				<green> 0 </green>
 				<blue> 0 </blue>
+				<brightness> 51 </brightness>
 				<zoom> -1 </zoom>
 				<filename> Interface\Shared\solid.dds </filename>
 			</image>

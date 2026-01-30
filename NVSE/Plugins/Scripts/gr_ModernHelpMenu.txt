@@ -301,6 +301,11 @@ endif
 
 TrudyRef.AuxVarSetFromArr "*HelpMenu_Categories" aCategories
 
+; MAPMO Support
+if eval IsModLoaded "Main And Pause Menus Overhaul.esm"
+	Goo1.AuxVarSetRef "*MAPMOQuest" (EditorIDToFormID "MAPMOMainQUEST")
+endif
+
 aCategories = aFiles = aJSON = aEntry = aCategory = aEntry = aForE1 = aForE2 = ar_Null
 
 sv_Destruct sJSONPath sTranslationPath sTemp sCategory

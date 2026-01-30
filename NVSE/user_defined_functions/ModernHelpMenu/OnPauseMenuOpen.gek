@@ -22,6 +22,24 @@ Begin Function {iMenuID}
 	SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\height" (GetUIFloatAlt "StartMenu\_item_height")
  	SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\button_text\wrapwidth" 0
 	SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\button_text\y" 11
-	CallAfterFrames 1 ({} => SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\width" ((GetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\button_text\width")+30))
+	CallAfterFrames 1 ({} => SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\width" ((GetUIFloatAlt "StartMenu\NOGLOW_BRANCH\ModernHelpMenuBack\button_text\width")+30)) 1
+
+	; MAPMO UI tweaks support
+	if GetVariable "ShowUITweaks" (Goo1.AuxVarGetRef "*MAPMOQuest") == 1 && FileExists "menus\prefabs\mapmo\clean_background.xml"
+		if GetUIFloatAlt "StartMenu\ModernHelpMenu\CleanBackground\visible" == -999
+			InjectUIXML "StartMenu\ModernHelpMenu" "data\menus\prefabs\mapmo\clean_background.xml"
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\Background\visible" 0
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\CleanBackground\visible" 1
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\CleanBackground\width" (GetUIFloatAlt "StartMenu\ModernHelpMenu\_width")
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\CleanBackground\height" (GetUIFloatAlt "StartMenu\ModernHelpMenu\_height")
+		endif
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\CleanBackground\_colorized" (GetUIFloatAlt "HUDMainMenu\_MAPMOCleanMenuBackgroundsColorized")
+		SetUIFloatAlt "StartMenu\ModernHelpMenu\CleanBackground\_faded" (GetUIFloatAlt "HUDMainMenu\_MAPMOUITweaksFadedEdges")
+		if eval GetUIFloatAlt "HUDMainMenu\_MAPMOCleanMenuBackgroundsColorized"
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\SearchBar\Window\systemcolor" (GetUIFloatAlt "StartMenu\_DiaHist+Systemcolor")
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\SortButton\Window\systemcolor" (GetUIFloatAlt "StartMenu\_DiaHist+Systemcolor")
+		endif
+	endif
+
 
 End

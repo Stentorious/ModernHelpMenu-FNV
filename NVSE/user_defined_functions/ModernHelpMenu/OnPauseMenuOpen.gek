@@ -36,8 +36,8 @@ Begin Function {iMenuID}
 		SetUIFloatAlt "StartMenu\ModernHelpMenu\CleanBackground\_colorized" (GetUIFloatAlt "HUDMainMenu\_MAPMOCleanMenuBackgroundsColorized")
 		SetUIFloatAlt "StartMenu\ModernHelpMenu\CleanBackground\_faded" (GetUIFloatAlt "HUDMainMenu\_MAPMOUITweaksFadedEdges")
 		if eval GetUIFloatAlt "HUDMainMenu\_MAPMOCleanMenuBackgroundsColorized"
-			SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\SearchBar\Window\systemcolor" (GetUIFloatAlt "StartMenu\_DiaHist+Systemcolor")
-			SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\SortButton\Window\systemcolor" (GetUIFloatAlt "StartMenu\_DiaHist+Systemcolor")
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\SearchBar\Window\systemcolor" (GetUIFloatAlt "StartMenu\_HelpMenu+Systemcolor")
+			SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\SortButton\Window\systemcolor" (GetUIFloatAlt "StartMenu\_HelpMenu+Systemcolor")
 		endif
 	endif
 

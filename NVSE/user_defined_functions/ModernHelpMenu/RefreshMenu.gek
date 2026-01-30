@@ -22,7 +22,7 @@ begin Function {}
 
 	SetUIFloatAlt "StartMenu\ModernHelpMenu\Search\_search_count" 0
 
-	; Prevent loading menu if no dialogue history
+	; Prevent loading menu if no help menu entries
 	if eval TrudyRef.AuxVarSize "*HelpMenu_Categories" < 1
 		return
 	endif

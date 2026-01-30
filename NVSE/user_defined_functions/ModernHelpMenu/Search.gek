@@ -16,7 +16,7 @@ begin Function {sSearch}
 
 	SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_term" (sSearch)
 
-	; Prevent search if no dialog history
+	; Prevent search if no help menu entries
 	if eval TrudyRef.AuxVarSize "*HelpMenu_Categories" == 0
 		return
 	endif

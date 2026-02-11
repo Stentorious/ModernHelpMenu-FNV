@@ -4,6 +4,6 @@ begin function {iKeyID}
 	if eval Goo1.AuxVarType "*HelpMenu_QKey" == 0
 		return
 	endif
-	AuxTimerStop "*HelpMenu_QKey"
+	Goo1.AuxTimerStop "*HelpMenu_QKey"
 	Goo1.AuxVarErase "*HelpMenu_QKey"
 end

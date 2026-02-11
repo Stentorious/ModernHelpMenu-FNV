@@ -46,9 +46,9 @@ begin Function {iButtonID}
 
 		; Queue input
 		if eval Goo1.AuxVarType "*HelpMenu_QBut" == 0
-			AuxTimerStart "*HelpMenu_QBut" 0.5 13
+			Goo1.AuxTimerStart "*HelpMenu_QBut" 0.5 13
 		else
-			AuxTimerStart "*HelpMenu_QBut" 0.075 13
+			Goo1.AuxTimerStart "*HelpMenu_QBut" 0.075 13
 		endif
 		Goo1.AuxVarSetFlt "*HelpMenu_QBut" 1
 
@@ -98,9 +98,9 @@ begin Function {iButtonID}
 
 		; Queue input
 		if eval Goo1.AuxVarType "*HelpMenu_QBut" == 0
-			AuxTimerStart "*HelpMenu_QBut" 0.5 13
+			Goo1.AuxTimerStart "*HelpMenu_QBut" 0.5 13
 		else
-			AuxTimerStart "*HelpMenu_QBut" 0.075 13
+			Goo1.AuxTimerStart "*HelpMenu_QBut" 0.075 13
 		endif
 		Goo1.AuxVarSetFlt "*HelpMenu_QBut" 2
 

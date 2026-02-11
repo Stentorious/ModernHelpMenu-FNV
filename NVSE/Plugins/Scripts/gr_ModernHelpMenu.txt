@@ -73,7 +73,7 @@ SetEventHandler "OnButtonUp:3" (begin function {int iKeyCode}
 	if eval Goo1.AuxVarType "*HelpMenu_QBut" == 0
 		return
 	endif
-	AuxTimerStop "*HelpMenu_QBut"
+	Goo1.AuxTimerStop "*HelpMenu_QBut"
 	Goo1.AuxVarErase "*HelpMenu_QBut"
 end)
 

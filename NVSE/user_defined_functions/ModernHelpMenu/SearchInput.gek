@@ -80,9 +80,9 @@ begin Function {iKeyID}
 
 	; Queue input
 	if eval Goo1.AuxVarType "*HelpMenu_QKey" == 0
-		AuxTimerStart "*HelpMenu_QKey" 0.5 13
+		Goo1.AuxTimerStart "*HelpMenu_QKey" 0.5 13
 	else
-		AuxTimerStart "*HelpMenu_QKey" 0.05 13
+		Goo1.AuxTimerStart "*HelpMenu_QKey" 0.05 13
 	endif
 	Goo1.AuxVarSetFlt "*HelpMenu_QKey" iKeyID
 

@@ -14,7 +14,7 @@ begin Function {sSearch}
 		return
 	endif
 
-	SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_term" (sSearch)
+	SetUIStringAlt "StartMenu\ModernHelpMenu\Search\_search_term" "%z" sSearch
 
 	; Prevent search if no help menu entries
 	if eval TrudyRef.AuxVarSize "*HelpMenu_Categories" == 0

@@ -9,7 +9,7 @@ if GetPluginVersion "JohnnyGuitarNVSE" < 517
 	MessageBoxEx "Modern Help Menu missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
 	return
 endif
-if GetPluginVersion "ShowOffNVSE Plugin" < 182
+if GetPluginVersion "ShowOffNVSE Plugin" < 183
 	MessageBoxEx "Modern Help Menu missing requirement!%rInstall latest ShowOff NVSE plugin."
 	return
 endif

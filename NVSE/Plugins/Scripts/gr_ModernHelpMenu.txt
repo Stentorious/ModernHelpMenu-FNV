@@ -78,7 +78,7 @@ SetEventHandler "OnButtonUp:3" (begin function {int iKeyCode}
 end)
 
 ; Modern Help Menu version
-float ModernHelpMenuVersion = 1.0
+float ModernHelpMenuVersion = 1.05
 
 int iIndex = 0
 int iSize

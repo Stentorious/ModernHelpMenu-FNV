@@ -68,7 +68,7 @@ begin Function {iKeyID}
 
 	; Characters
 	else
-		GetStringUIDimensions (sCharacter = ToANSIChar iKeyID 0) (GetUIFloatAlt "StartMenu\_MCMExt+FontGeneral") 100 (fWidth) (fHeight) (iLength)
+		GetStringUIDimensions (sCharacter = ToANSIChar iKeyID 0) (GetUIFloatAlt "StartMenu\_HelpMenu+Font") 100 (fWidth) (fHeight) (iLength)
 		if eval fWidth <= 2
 			sCharacter = ToANSIChar iKeyID 1
 		endif

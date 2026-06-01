@@ -1,9 +1,9 @@
 int	iKeyID
 
-float fTileX
-float fTileY
 float fCursorX
 float fCursorY
+float fTileX
+float fTileY
 
 begin Function {iKeyID}
 

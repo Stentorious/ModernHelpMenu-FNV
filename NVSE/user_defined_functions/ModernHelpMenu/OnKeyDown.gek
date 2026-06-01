@@ -1,7 +1,9 @@
 int	iKeyID
 
-float xmlCursorPosX
-float xmlCursorPosY
+float fTileX
+float fTileY
+float fCursorX
+float fCursorY
 
 begin Function {iKeyID}
 
@@ -33,15 +35,15 @@ begin Function {iKeyID}
 	endif
 
 	; Mouse Wheel
-	xmlCursorPosX = (((GetUIFloatAlt "StartMenu\_screen_width") / (Goo1.AuxVarGetFlt "*_ScreenWidth")) * (GetCursorPos X)) - GetUIFloatAlt "StartMenu\ModernHelpMenu\x"
-	xmlCursorPosY = (((GetUIFloatAlt "StartMenu\_screen_height") / (Goo1.AuxVarGetFlt "*_ScreenHeight")) * (GetCursorPos Y)) - GetUIFloatAlt "StartMenu\ModernHelpMenu\y"
-	if eval xmlCursorPosX > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\x" && xmlCursorPosX < (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\x" + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\width") && xmlCursorPosY > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\y" && xmlCursorPosY < (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\y" + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\height")
+	fCursorX = GetCursorPos X 1
+	fCursorY = GetCursorPos Y 1
+	if eval (fTileX = GetUIFloatInherited "StartMenu\ModernHelpMenu\WindowEntry\x") < fCursorX && fCursorX < (fTileX + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\width") && (fTileY = GetUIFloatInherited "StartMenu\ModernHelpMenu\WindowEntry\y") < fCursorY && fCursorY < (fTileY + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowEntry\height")
 		if eval iKeyID == 264
 			ClickMenuTile "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\scrollbar_vert_up"
 		elseif eval iKeyID == 265
 			ClickMenuTile "StartMenu\ModernHelpMenu\WindowEntry\Scrollbar\scrollbar_vert_down"
 		endif
-	elseif eval xmlCursorPosX > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\x" && xmlCursorPosX < (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\x" + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\width") && xmlCursorPosY > GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\y" && xmlCursorPosY < (GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\y" + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\height")
+	elseif eval (fTileX = GetUIFloatInherited "StartMenu\ModernHelpMenu\WindowDescription\x") < fCursorX && fCursorX < (fTileX + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\width") && (fTileY = GetUIFloatInherited "StartMenu\ModernHelpMenu\WindowDescription\y") < fCursorY && fCursorY < (fTileY + GetUIFloatAlt "StartMenu\ModernHelpMenu\WindowDescription\height")
 		if eval iKeyID == 264
 			ClickMenuTile "StartMenu\ModernHelpMenu\WindowDescription\Scrollbar\scrollbar_vert_up"
 		elseif eval iKeyID == 265

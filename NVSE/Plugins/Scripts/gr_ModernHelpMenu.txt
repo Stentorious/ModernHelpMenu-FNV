@@ -20,10 +20,6 @@ endif
 
 int iSUPInstalled = (eval GetPluginVersion "SUP NVSE Plugin" >= 600)
 
-; Get screen dimensions
-Goo1.AuxVarSetFlt "*_ScreenWidth" (GetNumericINISetting "iSize W:Display")
-Goo1.AuxVarSetFlt "*_ScreenHeight" (GetNumericINISetting "iSize H:Display")
-
 ; Menu events
 SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu\NOGLOW_BRANCH\main_container\lb_item_hotrect"
 SetOnMenuClickEventHandler (CompileScript "ModernHelpMenu\OnMenuClick.gek") 1 "StartMenu\NOGLOW_BRANCH\main_container"
@@ -53,20 +49,16 @@ SetEventHandler "OnButtonDown:8192" (CompileScript "ModernHelpMenu\OnButtonDown.
 
 ; Search bar events
 ; Search inputs
-array_var aKeys = Ar_List 2 3 4 5 6 7 8 9 10 11 12 13 16 17 18 19 20 21 22 23
-array_var aTemp = Ar_List 24 25 26 27 30 31 32 33 34 35 36 37 38 39 40 43 44 45 46 47
-ar_Cat aKeys aTemp
-aTemp = Ar_List 48 49 50 51 52 53 57
-ar_Cat aKeys aTemp
-aTemp = Ar_List 14 28 199 207 203 205 211
-ar_Cat aKeys aTemp
-if eval (int iSize = ar_Size aKeys) > 0
+array_var aTemp = Ar_List 2 3 4 5 6 7 8 9 10 11 12 13 16 17 18 19 20 21 22 23
+ar_Cat aTemp (Ar_List 24 25 26 27 30 31 32 33 34 35 36 37 38 39 40 43 44 45 46 47)
+ar_Cat aTemp (Ar_List 48 49 50 51 52 53 57 14 28 199 207 203 205 211)
+if eval (int iSize = ar_Size aTemp) > 0
 	while (iSize -= 1) > -1
-		SetOnKeyDownEventHandler (CompileScript "ModernHelpMenu\SearchInput.gek") 1 (aKeys[iSize])
-		SetOnKeyUpEventHandler (CompileScript "ModernHelpMenu\OnKeyUp.gek") 1 (aKeys[iSize])
+		SetOnKeyDownEventHandler (CompileScript "ModernHelpMenu\SearchInput.gek") 1 (aTemp[iSize])
+		SetOnKeyUpEventHandler (CompileScript "ModernHelpMenu\OnKeyUp.gek") 1 (aTemp[iSize])
 	loop
 endif
-aKeys = aTemp = ar_Null
+aTemp = ar_Null
 
 ; Controller scroll events
 SetEventHandler "OnButtonUp:3" (begin function {int iKeyCode}
@@ -97,7 +89,6 @@ string_var sCategory
 array_var aCategories = ar_Construct "array"
 array_var aFiles = GetFiles "HelpMenu" "*.json"
 if eval (iSize = ar_Size aFiles) > 0
-	PrintC "Modern Help Menu: Loading JSON files..."
 	aFiles = Ar_Sort aFiles 1
 	if eval FileExists "HelpMenu\FalloutNewVegas.json"
 		Ar_Erase aFiles (ar_Find "FalloutNewVegas.json" aFiles)
